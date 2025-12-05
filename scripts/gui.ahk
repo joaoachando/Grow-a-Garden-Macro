@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-version := "v1.2.8"
+version := "v1.2.9"
 settingsFile := "settings.ini"
 
 if (A_IsCompiled) {
@@ -21,7 +21,7 @@ MyWindow.OnEvent("Close", (*) => StopMacro())
 MyWindow.AddHostObjectToScript("ButtonClick", { func: WebButtonClickEvent })
 MyWindow.AddHostObjectToScript("Save", { func: SaveSettings })
 MyWindow.AddHostObjectToScript("ReadSettings", { func: SendSettings })
-MyWindow.Show("w650 h450")
+MyWindow.Show("w725 h525")
 
 
 
