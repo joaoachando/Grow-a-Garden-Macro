@@ -111,7 +111,7 @@ SaveSettings(settingsJson) {
     IniFile := A_WorkingDir . "\settings.ini"
 
     for key, val in settings {
-        if (key == "url" || key == "discordID" || key == "VipLink" || key == "Cosmetics" || key == "TravelingMerchant" || key == "CookingEvent" || key == "SearchList" || key == "CookingTime") {
+        if (key == "url" || key == "discordID" || key == "VipLink" || key == "Cosmetics" || key == "TravelingMerchant"  || key == "Ascension" || key == "CookingEvent" || key == "SearchList" || key == "CookingTime") {
             IniWrite(val, IniFile, "Settings", key)
         }
     }
@@ -177,6 +177,7 @@ SendSettings(){
         IniWrite("", settingsFile, "Settings", "VipLink")
         IniWrite("0", settingsFile, "Settings", "Cosmetics")
         IniWrite("1", settingsFile, "Settings", "TravelingMerchant")
+        IniWrite("1", settingsFile, "Settings", "Ascension")
         IniWrite("0", settingsFile, "Settings", "CookingEvent")
         IniWrite("", settingsFile, "Settings", "SearchList")
         IniWrite("", settingsFile, "Settings", "CookingTime")
@@ -215,6 +216,7 @@ SendSettings(){
 
     Other := [
         "TravelingMerchant",
+        "Ascension",
         "Cosmetics",
         "CookingEvent"
     ]
@@ -231,6 +233,7 @@ SendSettings(){
       , VipLink:   IniRead(settingsFile, "Settings", "VipLink")
       , Cosmetics:  IniRead(settingsFile, "Settings", "Cosmetics")
       , TravelingMerchant:  IniRead(settingsFile, "Settings", "TravelingMerchant")
+      , Ascension:  IniRead(settingsFile, "Settings", "Ascension")
       , CookingEvent:  IniRead(settingsFile, "Settings", "CookingEvent")
       , SearchList:  IniRead(settingsFile, "Settings", "SearchList")
       , CookingTime:  IniRead(settingsFile, "Settings", "CookingTime")

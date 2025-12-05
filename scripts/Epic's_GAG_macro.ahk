@@ -550,6 +550,12 @@ Clickbutton(button, clickit := 1){
             Gdip_DisposeImage(pBMScreen)
             return 1
         }
+    } else if (button == "Ascension"){
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["AscensionNotReady"], &OutputList, , , , , variation,,7) = 1) {
+            PlayerStatus("Ascension not ready.","0xe67e22",,false)
+            Gdip_DisposeImage(pBMScreen)
+            return 0
+        }
     }
     Gdip_DisposeImage(pBMScreen)
     return 0
@@ -1370,8 +1376,10 @@ MainLoop() {
     equipRecall()
     CameraCorrection()
     CookingEvent()
+    BuyAscension()
     BuySeeds()
     BuyGears()
+    BuySeasonPass()
     BuyEggs()
     BuySafariShop()
     ; BuyEvent()
@@ -1419,6 +1427,7 @@ ShowToolTip(){
     global LastGearCraftingTime
     global LastSeedCraftingTime
     global LastCookingTime
+    global LastAscensionTime
 
     global GearCraftingTime
     global SeedCraftingTime
@@ -1435,6 +1444,7 @@ ShowToolTip(){
     static seedCraftingEnabled := IniRead(settingsFile, "SeedCrafting", "SeedCrafting") + 0
     static cosmeticEnabled := IniRead(settingsFile, "Settings", "Cosmetics") + 0
     static merchantEnabled := IniRead(settingsFile, "Settings", "TravelingMerchant") + 0
+    static ascensionEnabled := IniRead(settingsFile, "Settings", "Ascension") + 0
     static CookingEnabled := IniRead(settingsFile, "Settings", "CookingEvent") + 0
 
 
@@ -1524,7 +1534,11 @@ ShowToolTip(){
         seedS := Mod(seedCraftRemaining, 60)
         tooltipText .= "Seed Crafting: " seedM ":" Format("{:02}", seedS) "`n"
     }
-    
+    if (ascensionEnabled) {
+        static ascensionTime := 7200
+        ascensionRemaining := Max(0, ascensionTime - (currentTime - LastAscensionTime))
+        tooltipText .= "Ascension: " (ascensionRemaining // 60) ":" Format("{:02}", Mod(ascensionRemaining, 60)) "`n"
+    }
 
     ToolTip(tooltipText, 100, 100)
 }
@@ -1539,6 +1553,33 @@ F3::
     ; Gdip_SaveBitmapToFile(pBMScreen,"ss.png")
     ; Gdip_DisposeImage(pBMScreen)
     PauseMacro()
+}
+
+BuyAscension() {
+    Clickbutton("Sell")
+    Sleep(200)
+    Walk(8350, Skey)
+    Sleep(200)
+    Walk(1900, Dkey)
+    Sleep(1500)
+    Send("{" Ekey "}")
+    Send("{" Ekey "}")
+    Sleep(2500)
+    clickOption(2,4)
+    Sleep(500)
+    if !DetectShop("Ascension"){
+        return 0
+    }
+    PlayerStatus("Ascension opened!", "0x22e6a8",,false)
+    if(Clickbutton("Ascension") == 1) {
+        PlayerStatus("Ascension bought!", "0x22e6a8",,false)
+    } else {
+        PlayerStatus("Ascension not detected.","0xe67e22",,false)
+        CloseClutter()
+        return 0
+    }
+    CloseClutter()
+    return 1
 }
 
 CookingEvent(){

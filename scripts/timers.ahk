@@ -15,11 +15,12 @@ LastGearCraftingTime := nowUnix()
 LastSeedCraftingTime := nowUnix()
 LastEventCraftingtime := nowUnix()
 LastCookingTime := nowUnix()
+LastAscensionTime := nowUnix()
 
 LastCosmetics := nowUnix()
 
 RewardChecker() {
-    global LastGearCraftingTime, EventCraftingtime, LastSeedCraftingTime, LastCookingTime, LastShopTime, LastEggsTime, LastCosmetics, LastMerchantTime ,LastSafariShopTime , LastCreepyCrittersTime, lastDevillishDecorTime
+    global LastGearCraftingTime, EventCraftingtime, LastSeedCraftingTime, LastCookingTime, LastShopTime, LastEggsTime, LastCosmetics, LastMerchantTime ,LastSafariShopTime , LastCreepyCrittersTime, lastDevillishDecorTime, LastAscensionTime
     ; , LastfallCosmeticsTime
 
     static CookingTime := Integer(IniRead(settingsFile, "Settings", "CookingTime") * 1.1)
@@ -34,6 +35,10 @@ RewardChecker() {
         Rewardlist.Push("Seeds")
         Rewardlist.Push("Gears")
         Rewardlist.Push("SeasonPass")
+    }
+    if (currentTime - LastAscensionTime >= 14400) {
+        LastAscensionTime := currentTime
+        Rewardlist.Push("Ascension")
     }
     if (currentTime - LastEggsTime >= 1800) {
         LastEggsTime := currentTime
@@ -92,6 +97,9 @@ RewardInterupt() {
         }
         if (v = "SeasonPass") {
             BuySeasonPass()
+        }
+        if (v = "Ascension") {
+            BuyAscension()
         }
         if (v = "Eggs") {
             BuyEggs()
