@@ -1,11 +1,7 @@
 #Requires AutoHotkey v2.0
 
-version := "v1.2.8"
+version := "v1.2.9"
 settingsFile := "settings.ini"
-
-
-
-
 
 if (A_IsCompiled) {
 	WebViewCtrl.CreateFileFromResource((A_PtrSize * 8) "bit\WebView2Loader.dll", WebViewCtrl.TempDir)
@@ -25,7 +21,7 @@ MyWindow.OnEvent("Close", (*) => StopMacro())
 MyWindow.AddHostObjectToScript("ButtonClick", { func: WebButtonClickEvent })
 MyWindow.AddHostObjectToScript("Save", { func: SaveSettings })
 MyWindow.AddHostObjectToScript("ReadSettings", { func: SendSettings })
-MyWindow.Show("w650 h450")
+MyWindow.Show("w725 h525")
 
 
 
@@ -45,7 +41,7 @@ Start(*) {
     
     PlayerStatus("Starting " version " Grow A Garden Macro by epic", "0xFFFF00", , false, , false)
     OnError (e, mode) => (mode = "return") * (-1)
-    Loop {
+    loop {
         MainLoop() 
     }
 }
@@ -53,13 +49,13 @@ Start(*) {
 ResetMacro(*) { 
     ; PlayerStatus("Stopped Grow A Garden Macro", "0xff8800", , false, , false)
     Send "{" Dkey " up}{" Wkey " up}{" Akey " up}{" Skey " up}{F14 up}"
-    Try Gdip_Shutdown(pToken)
+    try Gdip_Shutdown(pToken)
     Reload 
 }
 StopMacro(*) {
     PlayerStatus("Closed Grow A Garden Macro", "0xff5e00", , false, , false)
     Send "{" Dkey " up}{" Wkey " up}{" Akey " up}{" Skey " up}{F14 up}"
-    Try Gdip_Shutdown(pToken)
+    try Gdip_Shutdown(pToken)
     ExitApp()
 }
 
@@ -78,9 +74,6 @@ PauseMacro(*){
     }
     SetTimer () => ToolTip(), -1000
 }
-
-
-
 
 ScreenResolution() {
     if (A_ScreenDPI != 96) {
@@ -102,9 +95,6 @@ if (WinExist("Roblox ahk_exe ApplicationFrameHost.exe")){
         )", "WARNING!!", 0x1030 " T60"
 }
 
-
-
-
 WebButtonClickEvent(button) {
     switch button {
         case "Start":
@@ -121,7 +111,7 @@ SaveSettings(settingsJson) {
     IniFile := A_WorkingDir . "\settings.ini"
 
     for key, val in settings {
-        if (key == "url" || key == "discordID" || key == "VipLink" || key == "Cosmetics" || key == "TravelingMerchant" || key == "CookingEvent" || key == "SearchList" || key == "CookingTime") {
+        if (key == "url" || key == "discordID" || key == "VipLink" || key == "Cosmetics" || key == "TravelingMerchant"  || key == "Ascension" || key == "CookingEvent" || key == "SearchList" || key == "CookingTime") {
             IniWrite(val, IniFile, "Settings", key)
         }
     }
@@ -136,6 +126,7 @@ SaveSettings(settingsJson) {
         ; "fallCosmeticsItems", "fallCosmetics",
         "DevillishDecorItems", "DevillishDecor",
         "CreepyCrittersItems", "CreepyCritters",
+        "SeasonPassItems", "SeasonPass"
     )
 
     for groupName, sectionName in sectionMap {
@@ -166,6 +157,7 @@ SendSettings(){
     ; fallCosmeticsItems := getItems("fallCosmetics")
     DevillishDecorItems := getItems("DevillishDecor")
     CreepyCrittersItems := getItems("CreepyCritters")
+    SeasonPassItems := getItems("SeasonPass")
 
     seedItems.Push("Seeds")
     gearItems.Push("Gears")
@@ -176,6 +168,7 @@ SendSettings(){
     ; fallCosmeticsItems.Push("fallCosmetics")
     DevillishDecorItems.Push("DevillishDecor")
     CreepyCrittersItems.Push("CreepyCritters")
+    SeasonPassItems.Push("SeasonPass")
 
 
     if (!FileExist(settingsFile)) {
@@ -184,6 +177,7 @@ SendSettings(){
         IniWrite("", settingsFile, "Settings", "VipLink")
         IniWrite("0", settingsFile, "Settings", "Cosmetics")
         IniWrite("1", settingsFile, "Settings", "TravelingMerchant")
+        IniWrite("1", settingsFile, "Settings", "Ascension")
         IniWrite("0", settingsFile, "Settings", "CookingEvent")
         IniWrite("", settingsFile, "Settings", "SearchList")
         IniWrite("", settingsFile, "Settings", "CookingTime")
@@ -214,11 +208,15 @@ SendSettings(){
         for i in CreepyCrittersItems {
             IniWrite("0", settingsFile, "CreepyCritters", StrReplace(i, " ", ""))
         }
+        for i in SeasonPassItems {
+            IniWrite("0", settingsFile, "SeasonPass", StrReplace(i, " ", ""))
+        }
         Sleep(200)
     }
 
     Other := [
         "TravelingMerchant",
+        "Ascension",
         "Cosmetics",
         "CookingEvent"
     ]
@@ -235,6 +233,7 @@ SendSettings(){
       , VipLink:   IniRead(settingsFile, "Settings", "VipLink")
       , Cosmetics:  IniRead(settingsFile, "Settings", "Cosmetics")
       , TravelingMerchant:  IniRead(settingsFile, "Settings", "TravelingMerchant")
+      , Ascension:  IniRead(settingsFile, "Settings", "Ascension")
       , CookingEvent:  IniRead(settingsFile, "Settings", "CookingEvent")
       , SearchList:  IniRead(settingsFile, "Settings", "SearchList")
       , CookingTime:  IniRead(settingsFile, "Settings", "CookingTime")
@@ -247,6 +246,7 @@ SendSettings(){
     ;   , fallCosmeticsItems: Map()
       , DevillishDecorItems: Map()
       , CreepyCrittersItems: Map()
+      , SeasonPassItems: Map()
     }
 
     for item in seedItems {
@@ -282,7 +282,7 @@ SendSettings(){
         key := StrReplace(item, " ", "")
         value := IniRead(settingsFile, "SeedCrafting", key, "0")
         IniWrite(value, settingsFile, "SeedCrafting", key)
-        SettingsJson.GearCraftingItems[key] := value
+        SettingsJson.SeedCraftingItems[key] := value
     }
 
     for item in SafariShopItems {
@@ -290,6 +290,13 @@ SendSettings(){
         value := IniRead(settingsFile, "SafariShop", key, "0")
         IniWrite(value, settingsFile, "SafariShop", key)
         SettingsJson.SafariShopItems[key] := value
+    }
+
+    for item in SeasonPassItems {
+        key := StrReplace(item, " ", "")
+        value := IniRead(settingsFile, "SeasonPass", key, "0")
+        IniWrite(value, settingsFile, "SeasonPass", key)
+        SettingsJson.SeasonPassItems[key] := value
     }
     ; for item in fallCosmeticsItems {
     ;     key := StrReplace(item, " ", "")
@@ -314,19 +321,7 @@ SendSettings(){
 	MyWindow.PostWebMessageAsJson(JSON.stringify(SettingsJson))
 }
 
-
-
-
-
-
-
-
 PlayerStatus("Connected to discord!", "0x34495E", , false, , false)
-
-
-
-
-
 
 AsyncHttpRequest(method, url, func?, headers?) {
 	req := ComObject("Msxml2.XMLHTTP")
@@ -342,7 +337,6 @@ AsyncHttpRequest(method, url, func?, headers?) {
 
 CheckUpdate(req)
 {
-
 	if (req.readyState != 4)
 		return
 

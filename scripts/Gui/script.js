@@ -40,6 +40,7 @@ async function onSaveClick() {
   // const fallCosmeticsItems = await getItems("fallCosmetics");
   const DevillishDecorItems = await getItems("DevillishDecor");
   const CreepyCrittersItems = await getItems("CreepyCritters");
+  const SeasonPassItems = await getItems("SeasonPass");
 
   seedItems.push("Seeds");
   gearItems.push("Gears");
@@ -50,16 +51,19 @@ async function onSaveClick() {
   // fallCosmeticsItems.push("fallCosmetics");
   DevillishDecorItems.push("DevillishDecor");
   CreepyCrittersItems.push("CreepyCritters");
+  SeasonPassItems.push('SeasonPass');
 
   const cfg = {
     url: document.getElementById('url').value,
     discordID: document.getElementById('discordID').value,
     VipLink: document.getElementById('VipLink').value,
     TravelingMerchant: +document.getElementById('TravelingMerchant').checked,
+    Ascension: +document.getElementById('Ascension').checked,
     Cosmetics: +document.getElementById('Cosmetics').checked,
     CookingEvent:  +document.getElementById('CookingEvent').checked,
     SearchList:  document.getElementById('SearchList').value,
     CookingTime:  document.getElementById('CookingTime').value,
+    SeasonPass: +document.getElementById('SeasonPass').checked,
     seedItems: {},
     // seed2Items: {},
     gearItems: {},
@@ -70,6 +74,7 @@ async function onSaveClick() {
     // fallCosmeticsItems: {},
     DevillishDecorItems: {},
     CreepyCrittersItems: {},
+    SeasonPassItems: {},
   };
 
   const allLists = {
@@ -83,6 +88,7 @@ async function onSaveClick() {
     // fallCosmeticsItems,
     DevillishDecorItems,
     CreepyCrittersItems,
+    SeasonPassItems,
   };
 
   for (const [listName, items] of Object.entries(allLists)) {
@@ -108,23 +114,26 @@ function applySettings(a) {
     document.getElementById('url').value       = s.url;
     document.getElementById('discordID').value = s.discordID;
     document.getElementById('VipLink').value   = s.VipLink;
-    document.getElementById('Cosmetics').checked  = !!+s.Cosmetics
-    document.getElementById('TravelingMerchant').checked  = !!+s.TravelingMerchant
-    document.getElementById('CookingEvent').checked  = !!+s.CookingEvent
-    document.getElementById('SearchList').value  = s.SearchList
-    document.getElementById('CookingTime').value  = s.CookingTime
+    document.getElementById('Cosmetics').checked  = !!+s.Cosmetics;
+    document.getElementById('TravelingMerchant').checked  = !!+s.TravelingMerchant;
+    document.getElementById('Ascension').checked  = !!+s.Ascension;
+    document.getElementById('CookingEvent').checked  = !!+s.CookingEvent;
+    document.getElementById('SearchList').value  = s.SearchList;
+    document.getElementById('CookingTime').value  = s.CookingTime;
+    document.getElementById('SeasonPass').checked = !!+s.SeasonPass;
 
     const allItems = {
-      SeedItems: s.SeedItems,
-      // Seed2Items: s.Seed2Items,
-      GearItems: s.GearItems,
-      EggItems: s.EggItems,
-      GearCraftingItems: s.GearCraftingItems,
-      SeedCraftingItems: s.SeedCraftingItems,
-      SafariShopItems: s.SafariShopItems,
-      // fallCosmeticsItems: s.fallCosmeticsItems,
-      DevillishDecorItems: s.DevillishDecorItems,
-      CreepyCrittersItems: s.CreepyCrittersItems,
+      SeedItems: s.SeedItems || {},
+      // Seed2Items: s.Seed2Items || {},
+      GearItems: s.GearItems || {},
+      EggItems: s.EggItems || {},
+      GearCraftingItems: s.GearCraftingItems || {},
+      SeedCraftingItems: s.SeedCraftingItems || {},
+      SafariShopItems: s.SafariShopItems || {},
+      // fallCosmeticsItems: s.fallCosmeticsItems || {},
+      DevillishDecorItems: s.DevillishDecorItems || {},
+      CreepyCrittersItems: s.CreepyCrittersItems || {},
+      SeasonPassItems: s.SeasonPassItems || {},
     };
 
     for (const [listName, items] of Object.entries(allItems)) {
@@ -133,7 +142,6 @@ function applySettings(a) {
         const element = document.getElementById(formattedItem);
         if (element) {
           element.checked = !!+items[item];
-          console.log(element, items[item])
         }
       }
     }
@@ -143,7 +151,7 @@ function applySettings(a) {
 
 async function AddHtml() {
   const categories = [
-    "Seeds", "Gears", "Eggs", "GearCrafting", "SeedCrafting", "SafariShop", "CreepyCritters", 'DevillishDecor'
+    "Seeds", "Gears", "Eggs", "GearCrafting", "SeedCrafting", "SafariShop", "CreepyCritters", 'DevillishDecor', 'SeasonPass',
     // , "fallCosmetics"
     ];
 
@@ -197,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
       checkboxes.forEach(cb => {
         const isSelectAll = cb.classList.contains("SelectAll");
         const isEnableCheckbox = [
-          "Seeds", "Gears", "Eggs", "SafariShop", "CreepyCritters", 'DevillishDecor'
+          "Seeds", "Gears", "Eggs", "SafariShop", "CreepyCritters", 'DevillishDecor', 'SeasonPass',
           // , "fallCosmetics"
         ].includes(cb.id);
         if (!isSelectAll && !isEnableCheckbox) {
@@ -207,25 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Html cool stuff
 
@@ -294,11 +283,6 @@ document.querySelectorAll('.custom-dropdown-options div[data-value]').forEach(op
     }
   });
 });
-
-
-
-
-
 
 function selectDropdownValueByData(value) {
   const option = document.querySelector(`.custom-dropdown-options div[data-value="${value}"]`);
