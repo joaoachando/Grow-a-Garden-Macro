@@ -465,6 +465,7 @@ Clickbutton(button, clickit := 1){
         capW := windowWidth // 4
         capH := windowHeight * 0.25
         variation := 10
+        button := "SeasonStoreGreen"
     } else if (button == "Ascension") {
         capX := windowX + 960
         capY := windowY + 720
@@ -525,19 +526,7 @@ Clickbutton(button, clickit := 1){
             Gdip_DisposeImage(pBMScreen)
             return 1
         }
-    } else if (button == "SeasonStore") {
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["SeasonStoreGreen"], &OutputList, , , , , variation, , 7) = 1) {
-            if (clickit == 1) {
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
+    } else if (button == "SeasonStoreGreen") {
         if (Gdip_ImageSearch(pBMScreen, bitmaps["SeasonStoreYellow"], &OutputList, , , , , variation, , 7) = 1) {
             if (clickit == 1) {
                 Cords := StrSplit(OutputList, ",")
@@ -1558,10 +1547,12 @@ F3::
 BuyAscension() {
     Clickbutton("Sell")
     Sleep(200)
-    Walk(8350, Skey)
+    Walk(1500, Skey)
     Sleep(200)
     Walk(1900, Dkey)
-    Sleep(1500)
+    Sleep(200)
+    Walk(6850, Skey)
+    Sleep(1000)
     Send("{" Ekey "}")
     Send("{" Ekey "}")
     Sleep(2500)
