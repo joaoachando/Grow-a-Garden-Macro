@@ -126,6 +126,7 @@ SaveSettings(settingsJson) {
         ; "fallCosmeticsItems", "fallCosmetics",
         "DevillishDecorItems", "DevillishDecor",
         "CreepyCrittersItems", "CreepyCritters",
+        "SeasonPassItems", "SeasonPass"
     )
 
     for groupName, sectionName in sectionMap {
@@ -156,6 +157,7 @@ SendSettings(){
     ; fallCosmeticsItems := getItems("fallCosmetics")
     DevillishDecorItems := getItems("DevillishDecor")
     CreepyCrittersItems := getItems("CreepyCritters")
+    SeasonPassItems := getItems("SeasonPass")
 
     seedItems.Push("Seeds")
     gearItems.Push("Gears")
@@ -166,6 +168,7 @@ SendSettings(){
     ; fallCosmeticsItems.Push("fallCosmetics")
     DevillishDecorItems.Push("DevillishDecor")
     CreepyCrittersItems.Push("CreepyCritters")
+    SeasonPassItems.Push("SeasonPass")
 
 
     if (!FileExist(settingsFile)) {
@@ -204,6 +207,9 @@ SendSettings(){
         for i in CreepyCrittersItems {
             IniWrite("0", settingsFile, "CreepyCritters", StrReplace(i, " ", ""))
         }
+        for i in SeasonPassItems {
+            IniWrite("0", settingsFile, "SeasonPass", StrReplace(i, " ", ""))
+        }
         Sleep(200)
     }
 
@@ -237,6 +243,7 @@ SendSettings(){
     ;   , fallCosmeticsItems: Map()
       , DevillishDecorItems: Map()
       , CreepyCrittersItems: Map()
+      , SeasonPassItems: Map()
     }
 
     for item in seedItems {
@@ -272,7 +279,7 @@ SendSettings(){
         key := StrReplace(item, " ", "")
         value := IniRead(settingsFile, "SeedCrafting", key, "0")
         IniWrite(value, settingsFile, "SeedCrafting", key)
-        SettingsJson.GearCraftingItems[key] := value
+        SettingsJson.SeedCraftingItems[key] := value
     }
 
     for item in SafariShopItems {
@@ -280,6 +287,13 @@ SendSettings(){
         value := IniRead(settingsFile, "SafariShop", key, "0")
         IniWrite(value, settingsFile, "SafariShop", key)
         SettingsJson.SafariShopItems[key] := value
+    }
+
+    for item in SeasonPassItems {
+        key := StrReplace(item, " ", "")
+        value := IniRead(settingsFile, "SeasonPass", key, "0")
+        IniWrite(value, settingsFile, "SeasonPass", key)
+        SettingsJson.SeasonPassItems[key] := value
     }
     ; for item in fallCosmeticsItems {
     ;     key := StrReplace(item, " ", "")

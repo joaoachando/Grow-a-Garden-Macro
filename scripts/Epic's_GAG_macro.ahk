@@ -440,23 +440,41 @@ Clickbutton(button, clickit := 1){
         capY := windowY + 30
         capW := windowWidth // 2
         capH := 100
-        varation := 10
+        variation := 10
     } else if (button == "Xbutton") {
         capX := windowX + windowWidth * 0.60
         capY := windowY + windowHeight * 0.15
         capW := windowWidth * 0.38
         capH := windowHeight * 0.25
-        varation := 60
+        variation := 60
     } else if (button == "Robux"){
         capX := windowX + (windowWidth // 4)
         capY := windowY 
         capW := windowWidth //2
         capH := windowHeight
-        varation := 10
+        variation := 10
+    } else if (button == "SeasonPass") {
+        capX := windowX + 5
+        capY := windowY + (windowHeight // 3)
+        capW := windowWidth // 5
+        capH := windowHeight // 3
+        variation := 10
+    } else if (button == "SeasonStore") {
+        capX := windowX + (windowWidth * 0.65)
+        capY := windowY + windowHeight * 0.15
+        capW := windowWidth // 4
+        capH := windowHeight * 0.25
+        variation := 10
+    } else if (button == "Ascension") {
+        capX := windowX + 960
+        capY := windowY + 720
+        capW := 275
+        capH := 120
+        variation := 10
     }
 
     pBMScreen := Gdip_BitmapFromScreen(capX "|" capY "|" capW "|" capH)
-    if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , varation,,7) = 1) {
+    if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , variation,,7) = 1) {
         if (clickit == 1){
             Cords := StrSplit(OutputList, ",")
             x := Cords[1] + capX - 2
@@ -469,7 +487,7 @@ Clickbutton(button, clickit := 1){
         return 1
     }
     if (button == "Seeds" || button == "Sell") {    
-        if (Gdip_ImageSearch(pBMScreen, bitmaps[button "2"], &OutputList, , , , , varation,,7) = 1) {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button "2"], &OutputList, , , , , variation,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
@@ -495,11 +513,36 @@ Clickbutton(button, clickit := 1){
             return 1
         }
     } else if (button == "Xbutton"){
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , , varation,,7) = 1) {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , , variation,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
                 y := Cords[2] + capY 
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+    } else if (button == "SeasonStore") {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["SeasonStoreGreen"], &OutputList, , , , , variation, , 7) = 1) {
+            if (clickit == 1) {
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["SeasonStoreYellow"], &OutputList, , , , , variation, , 7) = 1) {
+            if (clickit == 1) {
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
                 MouseMove(x, y)
                 Sleep(10)
                 Click
@@ -712,6 +755,8 @@ CheckStock(index, list, crafting := false){
 buyShop(itemList, itemType, crafting := false){
     if (itemType == "Event" || itemType == "Eggs" || itemType == "Gears"){
         posY := 0.8
+    } else if (itemType == "SeasonPass") {
+        posY := 0.82
     } else {
         posY := 0.835
     }
@@ -931,11 +976,13 @@ initShops(){
     static Egginit := true
     static Merchantinit := true
     static Cosemticinit := true
+    static SeasonPassinit := true
     if (Shopinit == true){
         if ((Mod(A_Min, 10) = 3 || Mod(A_Min, 10) = 8)) {
             global LastShopTime := nowUnix()
             BuySeeds()
             BuyGears()
+            BuySeasonPass()
             Shopinit := false
         }
     } else if (Egginit == true){
@@ -989,10 +1036,29 @@ BuySeeds(){
     CloseRoblox()
 }
 
-
-
-
-
+BuySeasonPass() {
+    seasonPassItems := getItems("SeasonPass")
+    if !(CheckSetting("SeasonPass", "SeasonPass")) {
+        return
+    }
+    loop 3 {
+        PlayerStatus("Going to buy Season Pass!", "0x22e6a8",, false,, false)
+        relativeMouseMove(0.5, 0.5)
+        Sleep(500)
+        Clickbutton("SeasonPass")
+        Sleep(1000)
+        Clickbutton("SeasonStore")
+        Sleep(1000)
+        if !DetectShop("SeasonPass") {
+            CameraCorrection()
+            continue
+        }
+        buyShop(seasonPassItems, "SeasonPass")
+        CloseClutter()
+        return 1
+    }
+    PlayerStatus("Failed to buy Season Pass 3 times.", "0x001a12")
+}
 
 BuyGears(){
     gearItems := getItems("Gears")
@@ -1359,6 +1425,7 @@ ShowToolTip(){
 
     static SeedsEnabled := IniRead(settingsFile, "Seeds", "Seeds") + 0
     static GearsEnabled := IniRead(settingsFile, "Gears", "Gears") + 0
+    static SeasonPassEnabled := IniRead(settingsFile, "SeasonPass", "SeasonPass") + 0
     static EggsEnabled := IniRead(settingsFile, "Eggs", "Eggs") + 0
     static SafariShopEnabled := IniRead(settingsFile, "SafariShop", "SafariShop") + 0
     ; static fallCosmeticsEnabled := IniRead(settingsFile, "fallCosmetics", "fallCosmetics") + 0
@@ -1385,6 +1452,12 @@ ShowToolTip(){
         GearRemaining := Max(0, GearTime - (currentTime - LastShopTime))
         tooltipText .= "Gears: " (GearRemaining // 60) ":" Format("{:02}", Mod(GearRemaining, 60)) "`n"
     }
+    if (SeasonPassEnabled) {
+        static GearTime := 300
+        GearRemaining := Max(0, GearTime - (currentTime - LastShopTime))
+        tooltipText .= "SeasonPass: " (GearRemaining // 60) ":" Format("{:02}", Mod(GearRemaining, 60)) "`n"
+    }
+
     if (SafariShopEnabled) {
         static SafariShopTime := 900
         SafariShopRemaining := Max(0, SafariShopTime - (currentTime - LastSafariShopTime))

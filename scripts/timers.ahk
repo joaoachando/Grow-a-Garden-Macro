@@ -32,7 +32,8 @@ RewardChecker() {
     if (currentTime - LastShopTime >= 300) {
         LastShopTime := currentTime
         Rewardlist.Push("Seeds")
-        Rewardlist.Push("Gears")        
+        Rewardlist.Push("Gears")
+        Rewardlist.Push("SeasonPass")
     }
     if (currentTime - LastEggsTime >= 1800) {
         LastEggsTime := currentTime
@@ -88,6 +89,9 @@ RewardInterupt() {
         }
         if (v = "Gears") {
             BuyGears()
+        }
+        if (v = "SeasonPass") {
+            BuySeasonPass()
         }
         if (v = "Eggs") {
             BuyEggs()
