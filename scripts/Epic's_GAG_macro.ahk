@@ -19,7 +19,7 @@ WKey:="sc011" ; w
 AKey:="sc01e" ; a
 SKey:="sc01f" ; s
 Dkey:="sc020" ; d
-
+BKey := "sc030" ; b
 
 RotLeft := "vkBC" ; ,
 RotRight := "vkBE" ; .
@@ -576,6 +576,10 @@ CameraCorrection(){
         Sleep(500)
     }
     Clickbutton("Garden")
+    relativeMouseMove(-150, 0.5)
+    Sleep(300)
+    relativeMouseMove(400, 0.5)
+    Sleep(100)
     CloseClutter()
     Sleep(300)
     ChangeCamera("Follow")
@@ -596,9 +600,6 @@ CameraCorrection(){
         Clickbutton("Seeds") 
     }
     Sleep(500)
-    Clickbutton("Seeds")
-    Sleep(250)
-
     ChangeCamera("Classic")
     Sleep(1000)
     relativeMouseMove(0.5,0.5)
@@ -661,10 +662,10 @@ CheckStock(index, list, crafting := false){
     ActivateRoblox()
     hwnd := GetRobloxHWND()
     GetRobloxClientPos(hwnd)
-    captureWidth := 150
+    captureWidth := 175
     captureHeight := windowHeight // 2 + 100
 
-    captureX := windowX + (windowWidth // 2) - (captureWidth // 2) - 150
+    captureX := windowX + (windowWidth // 2) - (captureWidth // 2) - 50
     captureY := windowY + (windowHeight // 2) - (captureHeight // 2) + 20
 
     pBMScreen := Gdip_BitmapFromScreen(captureX "|" captureY "|" captureWidth "|" captureHeight)
@@ -710,9 +711,9 @@ CheckStock(index, list, crafting := false){
 
 buyShop(itemList, itemType, crafting := false){
     if (itemType == "Event" || itemType == "Eggs" || itemType == "Gears"){
-        pos := 0.8
+        posY := 0.8
     } else {
-        pos := 0.835
+        posY := 0.835
     }
     
 
@@ -726,25 +727,25 @@ buyShop(itemList, itemType, crafting := false){
                 Click
                 Sleep(250)
             } 
-            relativeMouseMove(0.4,pos)
-            Loop itemList.length * 2 {
+            relativeMouseMove(0.45,posY)
+            loop itemList.length * 2 {
                 Send("{WheelUp}")
                 Sleep 20
             }
             Sleep(250)
             Click
             Sleep(250)
-            Loop 12 {
+            Loop 15 {
                 Send("{WheelUp}")
                 Sleep 20
             }
             relativeMouseMove(0.5,0.4)
             Sleep(250)
         } else {
-            relativeMouseMove(0.4,pos)
+            relativeMouseMove(0.45,posY)
         }
         Click
-        Sleep(350)
+        Sleep(450)
         if (A_Index >= 23 && itemType != "Seeds") {
             ScrollDown(0.25)
             Sleep(250)
@@ -881,13 +882,18 @@ CloseShop(crafting := false){
             return 1
         }
     }
-    PlayerStatus("Failed to close shop.", "0xFF0000",,false,,true)
-    return 0
-
+    Send("{" Bkey "}")
+    Sleep(100)
+    Send("{" Bkey "}")
+    PlayerStatus("Closed shop!", "0x22e6a8", , false, , false)
 }
 
 
 CloseClutter(){
+    Send("{" Bkey "}")
+    Sleep(100)
+    Send("{" Bkey "}")
+    Sleep(100)
     Clickbutton("Xbutton")
     Sleep(200)
     Clickbutton("Robux")
@@ -967,6 +973,8 @@ BuySeeds(){
         relativeMouseMove(0.5, 0.5)
         Sleep(500)
         Clickbutton("Seeds")
+        Sleep(200)
+        relativeMouseMove(0.5, -150)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("Seeds"){
@@ -1182,6 +1190,12 @@ BuyMerchant(){
     }
 
     PlayerStatus("Going to buy Traveling Merchant!", "0x22e6a8",,false,,false)
+    Sleep(500)
+    Clickbutton("Garden")
+    relativeMouseMove(-250, 0.5)
+    Sleep(300)
+    relativeMouseMove(400, 0.5)
+    Sleep(100)
     Clickbutton("Seeds")
     Sleep(1500)
     Send("{" Akey " down}")
