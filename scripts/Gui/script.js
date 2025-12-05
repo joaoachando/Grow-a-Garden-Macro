@@ -108,23 +108,23 @@ function applySettings(a) {
     document.getElementById('url').value       = s.url;
     document.getElementById('discordID').value = s.discordID;
     document.getElementById('VipLink').value   = s.VipLink;
-    document.getElementById('Cosmetics').checked  = !!+s.Cosmetics
-    document.getElementById('TravelingMerchant').checked  = !!+s.TravelingMerchant
-    document.getElementById('CookingEvent').checked  = !!+s.CookingEvent
-    document.getElementById('SearchList').value  = s.SearchList
-    document.getElementById('CookingTime').value  = s.CookingTime
+    document.getElementById('Cosmetics').checked  = !!+s.Cosmetics;
+    document.getElementById('TravelingMerchant').checked  = !!+s.TravelingMerchant;
+    document.getElementById('CookingEvent').checked  = !!+s.CookingEvent;
+    document.getElementById('SearchList').value  = s.SearchList;
+    document.getElementById('CookingTime').value  = s.CookingTime;
 
     const allItems = {
-      SeedItems: s.SeedItems,
-      // Seed2Items: s.Seed2Items,
-      GearItems: s.GearItems,
-      EggItems: s.EggItems,
-      GearCraftingItems: s.GearCraftingItems,
-      SeedCraftingItems: s.SeedCraftingItems,
-      SafariShopItems: s.SafariShopItems,
-      // fallCosmeticsItems: s.fallCosmeticsItems,
-      DevillishDecorItems: s.DevillishDecorItems,
-      CreepyCrittersItems: s.CreepyCrittersItems,
+      SeedItems: s.SeedItems || {},
+      // Seed2Items: s.Seed2Items || {},
+      GearItems: s.GearItems || {},
+      EggItems: s.EggItems || {},
+      GearCraftingItems: s.GearCraftingItems || {},
+      SeedCraftingItems: s.SeedCraftingItems || {},
+      SafariShopItems: s.SafariShopItems || {},
+      // fallCosmeticsItems: s.fallCosmeticsItems || {},
+      DevillishDecorItems: s.DevillishDecorItems || {},
+      CreepyCrittersItems: s.CreepyCrittersItems || {},
     };
 
     for (const [listName, items] of Object.entries(allItems)) {
@@ -133,7 +133,6 @@ function applySettings(a) {
         const element = document.getElementById(formattedItem);
         if (element) {
           element.checked = !!+items[item];
-          console.log(element, items[item])
         }
       }
     }
@@ -208,25 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Html cool stuff
 
 document.querySelectorAll('.tabs button').forEach(button => {
@@ -294,11 +274,6 @@ document.querySelectorAll('.custom-dropdown-options div[data-value]').forEach(op
     }
   });
 });
-
-
-
-
-
 
 function selectDropdownValueByData(value) {
   const option = document.querySelector(`.custom-dropdown-options div[data-value="${value}"]`);

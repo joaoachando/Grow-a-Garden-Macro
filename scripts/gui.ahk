@@ -3,10 +3,6 @@
 version := "v1.2.8"
 settingsFile := "settings.ini"
 
-
-
-
-
 if (A_IsCompiled) {
 	WebViewCtrl.CreateFileFromResource((A_PtrSize * 8) "bit\WebView2Loader.dll", WebViewCtrl.TempDir)
     WebViewSettings := {DllPath: WebViewCtrl.TempDir "\" (A_PtrSize * 8) "bit\WebView2Loader.dll"}
@@ -45,7 +41,7 @@ Start(*) {
     
     PlayerStatus("Starting " version " Grow A Garden Macro by epic", "0xFFFF00", , false, , false)
     OnError (e, mode) => (mode = "return") * (-1)
-    Loop {
+    loop {
         MainLoop() 
     }
 }
@@ -53,13 +49,13 @@ Start(*) {
 ResetMacro(*) { 
     ; PlayerStatus("Stopped Grow A Garden Macro", "0xff8800", , false, , false)
     Send "{" Dkey " up}{" Wkey " up}{" Akey " up}{" Skey " up}{F14 up}"
-    Try Gdip_Shutdown(pToken)
+    try Gdip_Shutdown(pToken)
     Reload 
 }
 StopMacro(*) {
     PlayerStatus("Closed Grow A Garden Macro", "0xff5e00", , false, , false)
     Send "{" Dkey " up}{" Wkey " up}{" Akey " up}{" Skey " up}{F14 up}"
-    Try Gdip_Shutdown(pToken)
+    try Gdip_Shutdown(pToken)
     ExitApp()
 }
 
@@ -78,9 +74,6 @@ PauseMacro(*){
     }
     SetTimer () => ToolTip(), -1000
 }
-
-
-
 
 ScreenResolution() {
     if (A_ScreenDPI != 96) {
@@ -101,9 +94,6 @@ if (WinExist("Roblox ahk_exe ApplicationFrameHost.exe")){
         Download roblox from the official website https://www.roblox.com/download
         )", "WARNING!!", 0x1030 " T60"
 }
-
-
-
 
 WebButtonClickEvent(button) {
     switch button {
@@ -314,19 +304,7 @@ SendSettings(){
 	MyWindow.PostWebMessageAsJson(JSON.stringify(SettingsJson))
 }
 
-
-
-
-
-
-
-
 PlayerStatus("Connected to discord!", "0x34495E", , false, , false)
-
-
-
-
-
 
 AsyncHttpRequest(method, url, func?, headers?) {
 	req := ComObject("Msxml2.XMLHTTP")
@@ -342,7 +320,6 @@ AsyncHttpRequest(method, url, func?, headers?) {
 
 CheckUpdate(req)
 {
-
 	if (req.readyState != 4)
 		return
 

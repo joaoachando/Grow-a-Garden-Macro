@@ -36,8 +36,6 @@ SpaceKey := "sc039" ; Space
 SlashKey := "vk6F" ; /
 SC_LShift:="sc02a" ; LShift
 
-
-
 #Include "%A_ScriptDir%"
 #include ..\lib\
 
@@ -59,15 +57,11 @@ SC_LShift:="sc02a" ; LShift
 #Include webhook.ahk
 #Include timers.ahk
 
-
-
-
 ;@Ahk2Exe-AddResource Gui\index.html, Gui\index.html
 ;@Ahk2Exe-AddResource Gui\script.js, Gui\script.js
 ;@Ahk2Exe-AddResource Gui\style.css, Gui\style.css
 ;@Ahk2Exe-AddResource ..\Lib\32bit\WebView2Loader.dll, 32bit\WebView2Loader.dll
 ;@Ahk2Exe-AddResource ..\Lib\64bit\WebView2Loader.dll, 64bit\WebView2Loader.dll
-
 
 HyperSleep(ms) {
     static freq := (DllCall("QueryPerformanceFrequency", "Int64*", &f := 0), f)
@@ -287,15 +281,11 @@ searchItem(keyword){
     Sleep(1000)
     clearSearch()
     Sleep(1000)
-    cordx := 0
-    cordy := 0
     pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY "|" windowWidth "|" windowHeight )
     if (Gdip_ImageSearch(pBMScreen, bitmaps["Search"] , &OutputList, , , , , 50) = 1) {
         Cords := StrSplit(OutputList, ",")
         x := Cords[1] + windowX
         y := Cords[2] + windowY
-        cordx := x
-        cordy := y
         MouseMove(x, y)
         Sleep(300)
         Click
@@ -303,9 +293,11 @@ searchItem(keyword){
         Send(keyword)
         Sleep(500)
         Gdip_DisposeImage(pBMScreen)
+        return true
     } else {
         PlayerStatus("Could not detect Search in inventory", "0xFF0000")
         Gdip_DisposeImage(pBMScreen)
+        return false
     }
 }
 
@@ -357,7 +349,6 @@ clickItem(keyword, searchbitmap){
         PlayerStatus("Missing " keyword " in inventory!", "0xff0000")
         Gdip_DisposeImage(pBMScreen)
         closeBag()
-        return false
     }
 }
 
@@ -457,7 +448,7 @@ Clickbutton(button, clickit := 1){
         capH := windowHeight * 0.25
         varation := 60
     } else if (button == "Robux"){
-        capX := windowX windowWidth // 4
+        capX := windowX + (windowWidth // 4)
         capY := windowY 
         capW := windowWidth //2
         capH := windowHeight
@@ -562,13 +553,13 @@ checkCamera(type){
 ZoomAlign(){
     relativeMouseMove(0.5,0.5)
     Click
-    Loop 40 {
+    loop 40 {
         Send("{WheelUp}")
         Sleep 20
     }
 
     Sleep(500)
-    Loop 6 {
+    loop 6 {
         Send("{WheelDown}")
         Sleep 50
     }
@@ -621,11 +612,6 @@ SpamClick(amount){
         Sleep 20
     }
 }
-
-
-
-
-
 
 Crafting(Recipeitems, settingName, Names){
     ActivateRoblox()
@@ -798,7 +784,7 @@ clickOption(option, optionamount){
     Sleep(500)
     ZoomAlign()
     Sleep(2000)
-    Loop 4 {
+    loop 4 {
         Send("{WheelUp}")
         Sleep 50
     }
@@ -861,7 +847,7 @@ clickOption(option, optionamount){
     }
     Sleep(500)
     Click
-    Loop 4 {
+    loop 4 {
         Send("{WheelDown}")
         Sleep 50
     }
@@ -1148,17 +1134,13 @@ GearCraft(){
         { Name: "Silver Piggy", Materials: ["Poop"], CraftTime: 1800 },
         { Name: "Golden Piggy", Materials: ["Poop"], CraftTime: 2700 },
         { Name: "Chimera Stone", Materials: ["Poop"], CraftTime: 3600 },
-        
-        
     ]
     GearNames := getItems("GearCrafting")
 
     global GearCraftingTime
     GearCraftingTime := Crafting(GearRecipe, "GearCrafting", GearNames)
     Sleep(1000)
-
 }
-
 
 SeedCraft(){
     if !(CheckSetting("SeedCrafting", "SeedCrafting")){
@@ -1183,20 +1165,16 @@ SeedCraft(){
         { Name: "Evo Apple II", Materials: ["Poop"], CraftTime: 1200 },        
         { Name: "Evo Apple III", Materials: ["Poop"], CraftTime: 1800 },        
         { Name: "Evo Apple IV", Materials: ["Poop"], CraftTime: 2400 },        
-        { Name: "Olive", Materials: ["Poop"], CraftTime: 900 },        
-        { Name: "Hollow Bamboo", Materials: ["Poop"], CraftTime: 2700 },        
-        { Name: "Yarrow", Materials: ["Poop"], CraftTime: 3600 },        
+        { Name: "Olive", Materials: ["Poop"], CraftTime: 900 },
+        { Name: "Hollow Bamboo", Materials: ["Poop"], CraftTime: 2700 },
+        { Name: "Yarrow", Materials: ["Poop"], CraftTime: 3600 },
     ]
     SeedNames := getItems("SeedCrafting")
-
 
     global SeedCraftingtime
     SeedCraftingTime := Crafting(SeedRecipe, "SeedCrafting", SeedNames) 
     Sleep(1000)
-
 }
-
-
 
 BuyMerchant(){
     if !(CheckSetting("Settings", "TravelingMerchant")){
@@ -1347,9 +1325,6 @@ MainLoop() {
         ShowToolTip()
         Sleep(1000)
     }
-    
-    
-    
 }
 
 
@@ -1390,7 +1365,6 @@ ShowToolTip(){
         SeedRemaining := Max(0, SeedTime - (currentTime - LastShopTime))
         tooltipText .= "Seeds: " (SeedRemaining // 60) ":" Format("{:02}", Mod(SeedRemaining, 60)) "`n"
     }
-
 
     if (GearsEnabled) {
         static GearTime := 300
@@ -1468,8 +1442,6 @@ ShowToolTip(){
     ToolTip(tooltipText, 100, 100)
 }
 
-
-
 F3::
 {
     ; ActivateRoblox()
@@ -1525,9 +1497,6 @@ CookingEvent(){
     Sleep(250)
     Send("1")
 }
-
-
-
 
 BuySafariShop(){
     if !(CheckSetting("SafariShop", "SafariShop")){
