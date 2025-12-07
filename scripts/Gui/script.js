@@ -98,7 +98,6 @@ async function onSaveClick() {
   for (const [listName, items] of Object.entries(allLists)) {
     items.forEach(name => {
       const key = name.replace(/\s+/g, '');
-      name = name.replace(/\s+|\'+/g, '');
       const element = document.getElementById(key);
       if (element) {
         cfg[listName][name] = element.checked;
@@ -167,7 +166,7 @@ async function AddHtml() {
     if (!rewardGrid) continue;
 
     for (const item of items) {
-      const sanitizedName = item.name.replace(/\s+|\'+/g, '');
+      const sanitizedName = item.name.replace(/\s+/g, '');
       const imgPath = item.image || `../../images/${category}/${item.name}.webp`;
 
       const inputType = (category === "GearCrafting" || category === "SeedCrafting") ? "radio" : "checkbox";

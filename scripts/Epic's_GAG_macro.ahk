@@ -701,7 +701,7 @@ CheckStock(index, list, crafting := false){
     hwnd := GetRobloxHWND()
     GetRobloxClientPos(hwnd)
     captureWidth := 175
-    captureHeight := windowHeight // 2 + 100
+    captureHeight := windowHeight // 2 + 300
 
     captureX := windowX + (windowWidth // 2) - (captureWidth // 2) - 50
     captureY := windowY + (windowHeight // 2) - (captureHeight // 2) + 20
@@ -959,7 +959,7 @@ getItems(item){
     }
     names := []
     for itemObj in fileContent[item] {
-        names.Push(StrReplace(itemObj["name"], "'", ""))
+        names.Push(itemObj["name"])
     }
     return names
     ; jsonData := fileContent
