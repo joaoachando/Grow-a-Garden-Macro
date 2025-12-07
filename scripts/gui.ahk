@@ -306,7 +306,7 @@ SendSettings(){
         SettingsJson.SeasonPassItems[key] := value
     }
     for item in SantasStashItems {
-        key := StrReplace(StrReplace(item, "'", ""), " ", "")
+        key := StrReplace(StrReplace(item, " ", ""), "'", "")
         value := IniRead(settingsFile, "SantasStash", key, "0")
         IniWrite(value, settingsFile, "SantasStash", key)
         SettingsJson.SantasStashItems[key] := value
