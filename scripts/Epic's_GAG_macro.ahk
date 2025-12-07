@@ -959,7 +959,7 @@ getItems(item){
     }
     names := []
     for itemObj in fileContent[item] {
-        names.Push(itemObj["name"])
+        names.Push(StrReplace(itemObj["name"], "'", ""))
     }
     return names
     ; jsonData := fileContent
@@ -1371,6 +1371,7 @@ MainLoop() {
     BuySeasonPass()
     BuyEggs()
     BuySafariShop()
+    BuySantasStash()
     ; BuyEvent()
     BuyCosmetics()
     global LastCookingTime := nowUnix()
@@ -1409,6 +1410,7 @@ ShowToolTip(){
     global LastShopTime
     global LastEggsTime
     global LastSafariShopTime
+    global LastSantasStashTime
     ; global LastfallCosmeticsTime
     global LastDevillishDecorTime
     global LastCreepyCrittersTime
@@ -1426,6 +1428,7 @@ ShowToolTip(){
     static SeasonPassEnabled := IniRead(settingsFile, "SeasonPass", "SeasonPass") + 0
     static EggsEnabled := IniRead(settingsFile, "Eggs", "Eggs") + 0
     static SafariShopEnabled := IniRead(settingsFile, "SafariShop", "SafariShop") + 0
+    static SantasStashEnabled := IniRead(settingsFile, "SantasStash", "SantasStash") + 0
     ; static fallCosmeticsEnabled := IniRead(settingsFile, "fallCosmetics", "fallCosmetics") + 0
     static DevillishDecorEnabled := IniRead(settingsFile, "DevillishDecor", "DevillishDecor") + 0
     static CreepyCrittersEnabled := IniRead(settingsFile, "CreepyCritters", "CreepyCritters") + 0
@@ -1461,6 +1464,11 @@ ShowToolTip(){
         static SafariShopTime := 900
         SafariShopRemaining := Max(0, SafariShopTime - (currentTime - LastSafariShopTime))
         tooltipText .= "SafariShop: " (SafariShopRemaining // 60) ":" Format("{:02}", Mod(SafariShopRemaining, 60)) "`n"
+    }
+    if (SantasStashEnabled) {
+        static SantasStashTime := 2700
+        SantasStashRemaining := Max(0, SantasStashTime - (currentTime - LastSantasStashTime))
+        tooltipText .= "SantasStash: " (SantasStashRemaining // 60) ":" Format("{:02}", Mod(SantasStashRemaining, 60)) "`n"
     }
     ; if (fallCosmeticsEnabled) {
     ;     static fallCosmeticsTime := 3600
@@ -1538,6 +1546,7 @@ F3::
     ; ResizeRoblox()
     ; hwnd := GetRobloxHWND()
     ; GetRobloxClientPos(hwnd)
+    ; CameraCorrection()
     ; pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY + 30 "|" windowWidth "|" windowHeight - 30)
     ; Gdip_SaveBitmapToFile(pBMScreen,"ss.png")
     ; Gdip_DisposeImage(pBMScreen)
@@ -1636,6 +1645,27 @@ BuySafariShop(){
         return 0 
     }
     buyShop(getItems("SafariShop"), "SafariShop")
+    CloseClutter()
+    return 1
+}
+
+BuySantasStash(){
+    if !(CheckSetting("SantasStash", "SantasStash")){
+        return 0
+    }
+
+    PlayerStatus("Going to Santa's Stash!", "0x22e6a8",,false,,false)
+
+    searchItem("Event Lantern")
+    clickItem("Event Lantern", "Event Lantern")
+    Sleep(500)
+    Walk(1000,Wkey)
+    Sleep(1000)
+    Send("{" Ekey "}")
+    if !DetectShop("SantasStash"){
+        return 0
+    }
+    buyShop(getItems("SantasStash"), "SantasStash")
     CloseClutter()
     return 1
 }

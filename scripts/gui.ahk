@@ -126,14 +126,15 @@ SaveSettings(settingsJson) {
         ; "fallCosmeticsItems", "fallCosmetics",
         "DevillishDecorItems", "DevillishDecor",
         "CreepyCrittersItems", "CreepyCritters",
-        "SeasonPassItems", "SeasonPass"
+        "SeasonPassItems", "SeasonPass",
+        "SantasStashItems", "SantasStash",
     )
 
     for groupName, sectionName in sectionMap {
         if settings.Has(groupName) {
             group := settings[groupName]
             for itemName, isEnabled in group {
-                IniWrite(isEnabled ? 1 : 0, IniFile, sectionName, StrReplace(itemName, " ", ""))
+                IniWrite(isEnabled ? 1 : 0, IniFile, sectionName, StrReplace(StrReplace(itemName, " ", ""), "'", ""))
             }
         }
     }
@@ -158,6 +159,7 @@ SendSettings(){
     DevillishDecorItems := getItems("DevillishDecor")
     CreepyCrittersItems := getItems("CreepyCritters")
     SeasonPassItems := getItems("SeasonPass")
+    SantasStashItems := getItems("SantasStash")
 
     seedItems.Push("Seeds")
     gearItems.Push("Gears")
@@ -165,6 +167,7 @@ SendSettings(){
     GearCraftingItems.Push("GearCrafting")
     SeedCraftingItems.Push("SeedCrafting")
     SafariShopItems.Push("SafariShop")
+    SantasStashItems.Push("SantasStash")
     ; fallCosmeticsItems.Push("fallCosmetics")
     DevillishDecorItems.Push("DevillishDecor")
     CreepyCrittersItems.Push("CreepyCritters")
@@ -198,6 +201,9 @@ SendSettings(){
         }
         for i in SafariShopItems {
             IniWrite("0", settingsFile, "SafariShop", StrReplace(i, " ", ""))
+        }
+        for i in SantasStashItems {
+            IniWrite("0", settingsFile, "SantasStash", StrReplace(StrReplace(i, " ", ""), "'", ""))
         }
         ; for i in fallCosmeticsItems {
         ;     IniWrite("0", settingsFile, "fallCosmetics", StrReplace(i, " ", ""))
@@ -247,6 +253,7 @@ SendSettings(){
       , DevillishDecorItems: Map()
       , CreepyCrittersItems: Map()
       , SeasonPassItems: Map()
+      , SantasStashItems: Map()
     }
 
     for item in seedItems {
@@ -297,6 +304,12 @@ SendSettings(){
         value := IniRead(settingsFile, "SeasonPass", key, "0")
         IniWrite(value, settingsFile, "SeasonPass", key)
         SettingsJson.SeasonPassItems[key] := value
+    }
+    for item in SantasStashItems {
+        key := StrReplace(StrReplace(item, "'", ""), " ", "")
+        value := IniRead(settingsFile, "SantasStash", key, "0")
+        IniWrite(value, settingsFile, "SantasStash", key)
+        SettingsJson.SantasStashItems[key] := value
     }
     ; for item in fallCosmeticsItems {
     ;     key := StrReplace(item, " ", "")

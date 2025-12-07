@@ -41,6 +41,7 @@ async function onSaveClick() {
   const DevillishDecorItems = await getItems("DevillishDecor");
   const CreepyCrittersItems = await getItems("CreepyCritters");
   const SeasonPassItems = await getItems("SeasonPass");
+  const SantasStashItems = await getItems("SantasStash");
 
   seedItems.push("Seeds");
   gearItems.push("Gears");
@@ -52,6 +53,7 @@ async function onSaveClick() {
   DevillishDecorItems.push("DevillishDecor");
   CreepyCrittersItems.push("CreepyCritters");
   SeasonPassItems.push('SeasonPass');
+  SantasStashItems.push("SantasStash");
 
   const cfg = {
     url: document.getElementById('url').value,
@@ -75,6 +77,7 @@ async function onSaveClick() {
     DevillishDecorItems: {},
     CreepyCrittersItems: {},
     SeasonPassItems: {},
+    SantasStashItems: {},
   };
 
   const allLists = {
@@ -89,20 +92,21 @@ async function onSaveClick() {
     DevillishDecorItems,
     CreepyCrittersItems,
     SeasonPassItems,
+    SantasStashItems,
   };
 
   for (const [listName, items] of Object.entries(allLists)) {
     items.forEach(name => {
       const key = name.replace(/\s+/g, '');
+      name = name.replace(/\s+|\'+/g, '');
       const element = document.getElementById(key);
       if (element) {
         cfg[listName][name] = element.checked;
       }
     });
-}
+    }
 
   ahk.Save.Func(JSON.stringify(cfg));
-  console.log(cfg);
 }
   
 
@@ -134,6 +138,7 @@ function applySettings(a) {
       DevillishDecorItems: s.DevillishDecorItems || {},
       CreepyCrittersItems: s.CreepyCrittersItems || {},
       SeasonPassItems: s.SeasonPassItems || {},
+      SantasStashItems: s.SantasStashItems || {},
     };
 
     for (const [listName, items] of Object.entries(allItems)) {
@@ -151,7 +156,7 @@ function applySettings(a) {
 
 async function AddHtml() {
   const categories = [
-    "Seeds", "Gears", "Eggs", "GearCrafting", "SeedCrafting", "SafariShop", "CreepyCritters", 'DevillishDecor', 'SeasonPass',
+    'Seeds', 'Gears', 'Eggs', 'GearCrafting', 'SeedCrafting', 'SafariShop', 'CreepyCritters', 'DevillishDecor', 'SeasonPass', 'SantasStash'
     // , "fallCosmetics"
     ];
 
@@ -205,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
       checkboxes.forEach(cb => {
         const isSelectAll = cb.classList.contains("SelectAll");
         const isEnableCheckbox = [
-          "Seeds", "Gears", "Eggs", "SafariShop", "CreepyCritters", 'DevillishDecor', 'SeasonPass',
+          'Seeds', 'Gears', 'Eggs', 'SafariShop', 'CreepyCritters', 'DevillishDecor', 'SeasonPass', 'SantasStash'
           // , "fallCosmetics"
         ].includes(cb.id);
         if (!isSelectAll && !isEnableCheckbox) {

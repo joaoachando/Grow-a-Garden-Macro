@@ -16,11 +16,12 @@ LastSeedCraftingTime := nowUnix()
 LastEventCraftingtime := nowUnix()
 LastCookingTime := nowUnix()
 LastAscensionTime := nowUnix()
+LastSantasStashTime := nowUnix()
 
 LastCosmetics := nowUnix()
 
 RewardChecker() {
-    global LastGearCraftingTime, EventCraftingtime, LastSeedCraftingTime, LastCookingTime, LastShopTime, LastEggsTime, LastCosmetics, LastMerchantTime ,LastSafariShopTime , LastCreepyCrittersTime, lastDevillishDecorTime, LastAscensionTime
+    global LastGearCraftingTime, EventCraftingtime, LastSeedCraftingTime, LastCookingTime, LastShopTime, LastEggsTime, LastCosmetics, LastMerchantTime ,LastSafariShopTime , LastCreepyCrittersTime, lastDevillishDecorTime, LastAscensionTime, LastSantasStashTime
     ; , LastfallCosmeticsTime
 
     static CookingTime := Integer(IniRead(settingsFile, "Settings", "CookingTime") * 1.1)
@@ -59,6 +60,10 @@ RewardChecker() {
     if (currentTime - LastSafariShopTime >= 900) {
         LastSafariShopTime := currentTime
         Rewardlist.Push("SafariShop")
+    }
+    if (currentTime - LastSantasStashTime >= 2700) {
+        LastSantasStashTime := currentTime
+        Rewardlist.Push("SantasStash")
     }
     if (currentTime - LastMerchantTime >= 3600) {
         LastMerchantTime := currentTime
@@ -106,6 +111,9 @@ RewardInterupt() {
         }
         if (v = "SafariShop"){
             BuySafariShop()
+        }
+        if (v = "SantasStash"){
+            BuySantasStash()
         }
         ; if (v = "fallCosmetics"){
         ;     BuyfallCosmetics()
