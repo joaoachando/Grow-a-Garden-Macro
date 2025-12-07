@@ -134,7 +134,7 @@ SaveSettings(settingsJson) {
         if settings.Has(groupName) {
             group := settings[groupName]
             for itemName, isEnabled in group {
-                IniWrite(isEnabled ? 1 : 0, IniFile, sectionName, StrReplace(StrReplace(itemName, " ", ""), "'", ""))
+                IniWrite(isEnabled ? 1 : 0, IniFile, sectionName, StrReplace(itemName, " ", ""))
             }
         }
     }
@@ -203,7 +203,7 @@ SendSettings(){
             IniWrite("0", settingsFile, "SafariShop", StrReplace(i, " ", ""))
         }
         for i in SantasStashItems {
-            IniWrite("0", settingsFile, "SantasStash", StrReplace(StrReplace(i, " ", ""), "'", ""))
+            IniWrite("0", settingsFile, "SantasStash", StrReplace(i, " ", ""))
         }
         ; for i in fallCosmeticsItems {
         ;     IniWrite("0", settingsFile, "fallCosmetics", StrReplace(i, " ", ""))
@@ -306,7 +306,7 @@ SendSettings(){
         SettingsJson.SeasonPassItems[key] := value
     }
     for item in SantasStashItems {
-        key := StrReplace(StrReplace(item, " ", ""), "'", "")
+        key := StrReplace(item, " ", "")
         value := IniRead(settingsFile, "SantasStash", key, "0")
         IniWrite(value, settingsFile, "SantasStash", key)
         SettingsJson.SantasStashItems[key] := value
