@@ -167,7 +167,7 @@ async function AddHtml() {
     if (!rewardGrid) continue;
 
     for (const item of items) {
-      const sanitizedName = item.name.replace(/\s+/g, '');
+      const sanitizedName = item.name.replace(/\s+|\'+/g, '');
       const imgPath = item.image || `../../images/${category}/${item.name}.webp`;
 
       const inputType = (category === "GearCrafting" || category === "SeedCrafting") ? "radio" : "checkbox";
