@@ -122,12 +122,11 @@ SaveSettings(settingsJson) {
         "EggItems",  "Eggs",
         "GearCraftingItems", "GearCrafting",
         "SeedCraftingItems", "SeedCrafting",
-        "SafariShopItems", "SafariShop",
+        "SantasStashItems", "SantasStash",
         ; "fallCosmeticsItems", "fallCosmetics",
         "DevillishDecorItems", "DevillishDecor",
         "CreepyCrittersItems", "CreepyCritters",
         "SeasonPassItems", "SeasonPass",
-        "SantasStashItems", "SantasStash",
     )
 
     for groupName, sectionName in sectionMap {
@@ -154,19 +153,17 @@ SendSettings(){
     
     SeedCraftingItems := getItems("SeedCrafting")
     
-    SafariShopItems := getItems("SafariShop")
+    SantasStashItems := getItems("SantasStash")
     ; fallCosmeticsItems := getItems("fallCosmetics")
     DevillishDecorItems := getItems("DevillishDecor")
     CreepyCrittersItems := getItems("CreepyCritters")
     SeasonPassItems := getItems("SeasonPass")
-    SantasStashItems := getItems("SantasStash")
 
     seedItems.Push("Seeds")
     gearItems.Push("Gears")
     EggItems.Push("Eggs")
     GearCraftingItems.Push("GearCrafting")
     SeedCraftingItems.Push("SeedCrafting")
-    SafariShopItems.Push("SafariShop")
     SantasStashItems.Push("SantasStash")
     ; fallCosmeticsItems.Push("fallCosmetics")
     DevillishDecorItems.Push("DevillishDecor")
@@ -198,9 +195,6 @@ SendSettings(){
         }
         for i in SeedCraftingItems {
             IniWrite("0", settingsFile, "SeedCrafting", StrReplace(i, " ", ""))
-        }
-        for i in SafariShopItems {
-            IniWrite("0", settingsFile, "SafariShop", StrReplace(i, " ", ""))
         }
         for i in SantasStashItems {
             IniWrite("0", settingsFile, "SantasStash", StrReplace(i, " ", ""))
@@ -248,12 +242,11 @@ SendSettings(){
       , EggItems:  Map()
       , GearCraftingItems: Map()
       , SeedCraftingItems: Map()
-      , SafariShopItems: Map()
+      , SantasStashItems: Map()
     ;   , fallCosmeticsItems: Map()
       , DevillishDecorItems: Map()
       , CreepyCrittersItems: Map()
       , SeasonPassItems: Map()
-      , SantasStashItems: Map()
     }
 
     for item in seedItems {
@@ -292,11 +285,11 @@ SendSettings(){
         SettingsJson.SeedCraftingItems[key] := value
     }
 
-    for item in SafariShopItems {
+    for item in SantasStashItems {
         key := StrReplace(item, " ", "")
-        value := IniRead(settingsFile, "SafariShop", key, "0")
-        IniWrite(value, settingsFile, "SafariShop", key)
-        SettingsJson.SafariShopItems[key] := value
+        value := IniRead(settingsFile, "SantasStash", key, "0")
+        IniWrite(value, settingsFile, "SantasStash", key)
+        SettingsJson.SantasStashItems[key] := value
     }
 
     for item in SeasonPassItems {
@@ -304,12 +297,6 @@ SendSettings(){
         value := IniRead(settingsFile, "SeasonPass", key, "0")
         IniWrite(value, settingsFile, "SeasonPass", key)
         SettingsJson.SeasonPassItems[key] := value
-    }
-    for item in SantasStashItems {
-        key := StrReplace(item, " ", "")
-        value := IniRead(settingsFile, "SantasStash", key, "0")
-        IniWrite(value, settingsFile, "SantasStash", key)
-        SettingsJson.SantasStashItems[key] := value
     }
     ; for item in fallCosmeticsItems {
     ;     key := StrReplace(item, " ", "")

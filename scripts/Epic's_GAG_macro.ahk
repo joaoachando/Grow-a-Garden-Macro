@@ -443,10 +443,10 @@ Clickbutton(button, clickit := 1){
         variation := 10
     } else if (button == "Xbutton") {
         capX := windowX + windowWidth * 0.60
-        capY := windowY + windowHeight * 0.15
+        capY := windowY + windowHeight * 0.1
         capW := windowWidth * 0.38
         capH := windowHeight * 0.25
-        variation := 60
+        variation := 20
     } else if (button == "Robux"){
         capX := windowX + (windowWidth // 4)
         capY := windowY 
@@ -475,24 +475,98 @@ Clickbutton(button, clickit := 1){
     }
 
     pBMScreen := Gdip_BitmapFromScreen(capX "|" capY "|" capW "|" capH)
-    if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , variation,,7) = 1) {
-        if (clickit == 1){
-            Cords := StrSplit(OutputList, ",")
-            x := Cords[1] + capX - 2
-            y := Cords[2] + capY 
-            MouseMove(x, y)
-            Sleep(10)
-            Click
+    if (button == "Xbutton"){
+
+        ; Only for santa event delete later
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton8"], &OutputList, , , , ,  20,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
         }
-        Gdip_DisposeImage(pBMScreen)
-        return 1
-    }
-    if (button == "Seeds" || button == "Sell") {    
-        if (Gdip_ImageSearch(pBMScreen, bitmaps[button "2"], &OutputList, , , , , variation,,7) = 1) {
+
+
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , varation,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  varation,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+        ; For cosmetics xbutton
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton6"], &OutputList, , , , ,  10,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton7"], &OutputList, , , , ,  10,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
                 y := Cords[2] + capY 
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+
+
+
+    } else {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , varation,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY 
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+    }
+
+
+    if (button == "Seeds" || button == "Sell") {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button "2"], &OutputList, , , , , varation,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
                 MouseMove(x, y)
                 Sleep(10)
                 Click
@@ -502,19 +576,6 @@ Clickbutton(button, clickit := 1){
         }
     } else if (button == "Robux"){
         if (Gdip_ImageSearch(pBMScreen, bitmaps["RobuxOld"], &OutputList, , , , , 10,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY 
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
-    } else if (button == "Xbutton"){
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , , variation,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
@@ -614,10 +675,6 @@ CameraCorrection(){
         Sleep(500)
     }
     Clickbutton("Garden")
-    relativeMouseMove(-150, 0.5)
-    Sleep(300)
-    relativeMouseMove(400, 0.5)
-    Sleep(100)
     CloseClutter()
     Sleep(300)
     ChangeCamera("Follow")
@@ -704,7 +761,7 @@ CheckStock(index, list, crafting := false){
     captureHeight := windowHeight // 2 + 300
 
     captureX := windowX + (windowWidth // 2) - (captureWidth // 2) - 50
-    captureY := windowY + (windowHeight // 2) - (captureHeight // 2) + 20
+    captureY := windowY + (windowHeight // 2) - (captureHeight // 2) + 50
 
     pBMScreen := Gdip_BitmapFromScreen(captureX "|" captureY "|" captureWidth "|" captureHeight)
     If (Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock"], &OutputList, , , , , 3,,3) = 1 || Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock2"], &OutputList , , , , , 3,,3) = 1) {
@@ -749,11 +806,13 @@ CheckStock(index, list, crafting := false){
 
 buyShop(itemList, itemType, crafting := false){
     if (itemType == "Event" || itemType == "Eggs" || itemType == "Gears"){
-        posY := 0.8
+        posY := 0.9
+    } else if (itemType == "SantasStash"){
+        posY := 0.835
     } else if (itemType == "SeasonPass") {
         posY := 0.82
     } else {
-        posY := 0.835
+        posY := 0.925
     }
     
 
@@ -768,14 +827,14 @@ buyShop(itemList, itemType, crafting := false){
                 Sleep(250)
             } 
             relativeMouseMove(0.45,posY)
-            loop itemList.length * 2 {
+            loop itemList.length * 2.5 {
                 Send("{WheelUp}")
                 Sleep 20
             }
             Sleep(250)
             Click
             Sleep(250)
-            Loop 15 {
+            Loop 12 {
                 Send("{WheelUp}")
                 Sleep 20
             }
@@ -785,7 +844,7 @@ buyShop(itemList, itemType, crafting := false){
             relativeMouseMove(0.45,posY)
         }
         Click
-        Sleep(450)
+        Sleep(350)
         if (A_Index >= 23 && itemType != "Seeds") {
             ScrollDown(0.25)
             Sleep(250)
@@ -916,6 +975,14 @@ CloseShop(crafting := false){
     }
     loop 15 {
         Sleep(500)
+        if (A_Index == 1) {
+            relativeMouseMove(0.95, 0.2)
+            Sleep(250)
+            Click
+            Sleep(500)
+            PlayerStatus("Closed shop!", "0x22e6a8",,false,,false)
+            return 1
+        }
         if (Clickbutton("Xbutton") == 1){
             Sleep(1000)
             PlayerStatus("Closed shop!", "0x22e6a8",,false,,false)
@@ -930,13 +997,14 @@ CloseShop(crafting := false){
 
 
 CloseClutter(){
-    Send("{" Bkey "}")
-    Sleep(100)
-    Send("{" Bkey "}")
-    Sleep(100)
     Clickbutton("Xbutton")
     Sleep(200)
+    CloseTokenGui()
     Clickbutton("Robux")
+    Sleep(100)
+    Send("{" Bkey "}")
+    Sleep(100)
+    Send("{" Bkey "}")
     Sleep(100)
 }
 
@@ -1015,8 +1083,6 @@ BuySeeds(){
         relativeMouseMove(0.5, 0.5)
         Sleep(500)
         Clickbutton("Seeds")
-        Sleep(200)
-        relativeMouseMove(0.5, -150)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("Seeds"){
@@ -1251,12 +1317,6 @@ BuyMerchant(){
     }
 
     PlayerStatus("Going to buy Traveling Merchant!", "0x22e6a8",,false,,false)
-    Sleep(500)
-    Clickbutton("Garden")
-    relativeMouseMove(-250, 0.5)
-    Sleep(300)
-    relativeMouseMove(400, 0.5)
-    Sleep(100)
     Clickbutton("Seeds")
     Sleep(1500)
     Send("{" Akey " down}")
@@ -1370,7 +1430,6 @@ MainLoop() {
     BuyGears()
     BuySeasonPass()
     BuyEggs()
-    BuySafariShop()
     BuySantasStash()
     ; BuyEvent()
     BuyCosmetics()
@@ -1409,7 +1468,6 @@ MainLoop() {
 ShowToolTip(){
     global LastShopTime
     global LastEggsTime
-    global LastSafariShopTime
     global LastSantasStashTime
     ; global LastfallCosmeticsTime
     global LastDevillishDecorTime
@@ -1427,7 +1485,6 @@ ShowToolTip(){
     static GearsEnabled := IniRead(settingsFile, "Gears", "Gears") + 0
     static SeasonPassEnabled := IniRead(settingsFile, "SeasonPass", "SeasonPass") + 0
     static EggsEnabled := IniRead(settingsFile, "Eggs", "Eggs") + 0
-    static SafariShopEnabled := IniRead(settingsFile, "SafariShop", "SafariShop") + 0
     static SantasStashEnabled := IniRead(settingsFile, "SantasStash", "SantasStash") + 0
     ; static fallCosmeticsEnabled := IniRead(settingsFile, "fallCosmetics", "fallCosmetics") + 0
     static DevillishDecorEnabled := IniRead(settingsFile, "DevillishDecor", "DevillishDecor") + 0
@@ -1460,11 +1517,6 @@ ShowToolTip(){
         tooltipText .= "SeasonPass: " (GearRemaining // 60) ":" Format("{:02}", Mod(GearRemaining, 60)) "`n"
     }
 
-    if (SafariShopEnabled) {
-        static SafariShopTime := 900
-        SafariShopRemaining := Max(0, SafariShopTime - (currentTime - LastSafariShopTime))
-        tooltipText .= "SafariShop: " (SafariShopRemaining // 60) ":" Format("{:02}", Mod(SafariShopRemaining, 60)) "`n"
-    }
     if (SantasStashEnabled) {
         static SantasStashTime := 2700
         SantasStashRemaining := Max(0, SantasStashTime - (currentTime - LastSantasStashTime))
@@ -1539,6 +1591,41 @@ ShowToolTip(){
 
     ToolTip(tooltipText, 100, 100)
 }
+
+
+CloseTokenGui(){
+    ActivateRoblox()
+    hwnd := GetRobloxHWND()
+    GetRobloxClientPos(hwnd)
+    capX := windowX + windowWidth * 0.6
+    capY := windowY + windowHeight * 0.3
+    capW := windowWidth * 0.2
+    capH := windowHeight * 0.3
+    pBMScreen := Gdip_BitmapFromScreen(capX "|" capY "|" capW "|" capH)
+    if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton3"],&OutputList , , , , , 25) = 1) {
+        Cords := StrSplit(OutputList, ",")
+        x := Cords[1] + capX
+        y := Cords[2] + capY
+        MouseMove(x, y)
+        Sleep(200)
+        Click
+        Gdip_DisposeImage(pBMScreen)
+        return true
+    }
+    if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton4"],&OutputList , , , , , 25) = 1) {
+        Cords := StrSplit(OutputList, ",")
+        x := Cords[1] + capX
+        y := Cords[2] + capY
+        MouseMove(x, y)
+        Sleep(200)
+        Click
+        Gdip_DisposeImage(pBMScreen)
+        return true
+    }
+    Gdip_DisposeImage(pBMScreen)
+    return false
+}
+
 
 F3::
 {
@@ -1626,47 +1713,28 @@ CookingEvent(){
     Send("1")
 }
 
-BuySafariShop(){
-    if !(CheckSetting("SafariShop", "SafariShop")){
-        return 0
-    }
 
-    PlayerStatus("Going to SafariShop Shop!", "0x22e6a8",,false,,false)
 
-    searchItem("Event Lantern")
-    clickItem("Event Lantern", "Event Lantern")
-    Sleep(500)
-    Walk(1200,Dkey)
-    Sleep(500)
-    Walk(400,Wkey)
-    Sleep(1000)
-    Send("{" Ekey "}")
-    if !DetectShop("SafariShop"){
-        return 0 
-    }
-    buyShop(getItems("SafariShop"), "SafariShop")
-    CloseClutter()
-    return 1
-}
 
 BuySantasStash(){
     if !(CheckSetting("SantasStash", "SantasStash")){
         return 0
     }
 
-    PlayerStatus("Going to Santa's Stash!", "0x22e6a8",,false,,false)
+    PlayerStatus("Going to Santas Stash Shop!", "0x22e6a8",,false,,false)
 
     searchItem("Event Lantern")
     clickItem("Event Lantern", "Event Lantern")
-    Sleep(500)
-    Walk(1000,Wkey)
+    Sleep(1000)
+    Walk(1250,WKey)
     Sleep(1000)
     Send("{" Ekey "}")
     if !DetectShop("SantasStash"){
-        return 0
+        return 0 
     }
     buyShop(getItems("SantasStash"), "SantasStash")
     CloseClutter()
+    Clickbutton("Garden")
     return 1
 }
 
