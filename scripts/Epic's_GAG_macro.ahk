@@ -446,7 +446,7 @@ Clickbutton(button, clickit := 1){
         capY := windowY + windowHeight * 0.1
         capW := windowWidth * 0.38
         capH := windowHeight * 0.25
-        variation := 20
+        variation := 50
     } else if (button == "Robux"){
         capX := windowX + (windowWidth // 4)
         capY := windowY 
@@ -476,100 +476,76 @@ Clickbutton(button, clickit := 1){
 
     pBMScreen := Gdip_BitmapFromScreen(capX "|" capY "|" capW "|" capH)
     if (button == "Xbutton"){
+        isFound := false
 
-        ; Only for santa event delete later
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton8"], &OutputList, , , , ,  20,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY
-                MouseMove(x, y)
-                Sleep(10)
-                Click
+
+        loop 1 {
+            ;  Only for santa event delete later
+            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton5"], &OutputList, , , , ,  125,,7) = 1) {
+                ; MsgBox("1")
+                isFound := true
+                Gdip_DisposeImage(pBMScreen)
+                break
             }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
+            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton6"], &OutputList, , , , ,  125,,7) = 1) {
+                ; MsgBox("2")
+                isFound := true
+                Gdip_DisposeImage(pBMScreen)
+                break
+            }
+
+
+            ; Light Xbutton
+            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton"], &OutputList, , , , , varation,,7) = 1) {
+                ; MsgBox("3")
+                isFound := true
+                Gdip_DisposeImage(pBMScreen)
+                break
+            }
+            ; Dark Xbutton
+            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  varation,,7) = 1) {
+                ; MsgBox("4")
+                isFound := true
+                Gdip_DisposeImage(pBMScreen)
+                break
+            }
+
+            ;if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton9"], &OutputList, , , , ,  10,,7) = 1) {
+                         ;            if (clickit == 1){
+                         ;                Cords := StrSplit(OutputList, ",")
+                         ;                x := Cords[1] + capX - 2
+                         ;                y := Cords[2] + capY
+                         ;                MouseMove(x, y)
+                         ;                Sleep(10)
+                         ;                Click
+                         ;            }
+                         ;            Gdip_DisposeImage(pBMScreen)
+                         ;            return 1
+                         ;        }
+                         ;
+                         ;        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton10"], &OutputList, , , , ,  10,,7) = 1) {
+                         ;            if (clickit == 1){
+                         ;                 Cords := StrSplit(OutputList, ",")
+                         ;                 x := Cords[1] + capX - 2
+                         ;                 y := Cords[2] + capY
+                         ;                 MouseMove(x, y)
+                         ;                 Sleep(10)
+                         ;                 Click
+                         ;            }
+                         ;            Gdip_DisposeImage(pBMScreen)
+                         ;            return 1
+                         ;        }
         }
 
-
-        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , variation,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
+        if (clickit == 1 && isFound == true){
+            Cords := StrSplit(OutputList, ",")
+            x := Cords[1] + capX - 2
+            y := Cords[2] + capY
+            MouseMove(x, y)
+            Sleep(10)
+            Click
         }
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  variation,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
-        ; For cosmetics xbutton
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton6"], &OutputList, , , , ,  10,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
-
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton7"], &OutputList, , , , ,  10,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY 
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
-
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton9"], &OutputList, , , , ,  10,,7) = 1) {
-            if (clickit == 1){
-                Cords := StrSplit(OutputList, ",")
-                x := Cords[1] + capX - 2
-                y := Cords[2] + capY
-                MouseMove(x, y)
-                Sleep(10)
-                Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
-
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton10"], &OutputList, , , , ,  10,,7) = 1) {
-            if (clickit == 1){
-                 Cords := StrSplit(OutputList, ",")
-                 x := Cords[1] + capX - 2
-                 y := Cords[2] + capY
-                 MouseMove(x, y)
-                 Sleep(10)
-                 Click
-            }
-            Gdip_DisposeImage(pBMScreen)
-            return 1
-        }
-
-
+        return isFound
 
     } else {
         if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , variation,,7) = 1) {
@@ -643,6 +619,11 @@ ChangeCamera(type){
     HyperSleep(750)
     Send("{Tab}")
     HyperSleep(333)
+    loop 10 {
+        Send("{Up}")
+        Sleep(50)
+    }
+    Sleep(150)
     Send("{Down}")
     HyperSleep(333)
     Send("{Right}")
@@ -1002,14 +983,6 @@ CloseShop(crafting := false){
     }
     loop 15 {
         Sleep(500)
-        if (A_Index == 1) {
-            relativeMouseMove(0.95, 0.2)
-            Sleep(250)
-            Click
-            Sleep(500)
-            PlayerStatus("Closed shop!", "0x22e6a8",,false,,false)
-            return 1
-        }
         if (Clickbutton("Xbutton") == 1){
             Sleep(1000)
             PlayerStatus("Closed shop!", "0x22e6a8",,false,,false)
@@ -1159,7 +1132,7 @@ BuyGears(){
         Clickbutton("Garden")
         Sleep(500)
         Send("1")
-        Sleep(300)
+        Sleep(750)
         relativeMouseMove(0.5, 0.5)
         Click
         Sleep(1500)
@@ -1273,7 +1246,7 @@ GearCraft(){
     Clickbutton("Garden")
     Sleep(500)
     Send("1")
-    Sleep(300)
+    Sleep(1000)
     relativeMouseMove(0.5, 0.5)
     Click
     Sleep(2000)
@@ -1313,7 +1286,7 @@ SeedCraft(){
     Clickbutton("Garden")
     Sleep(500)
     Send("1")
-    Sleep(300)
+    Sleep(1000)
     relativeMouseMove(0.5, 0.5)
     Click
     Sleep(2000)
