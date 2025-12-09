@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-version := "v1.3.0a"
+version := "v1.3.0b"
 settingsFile := "settings.ini"
 
 if (A_IsCompiled) {
