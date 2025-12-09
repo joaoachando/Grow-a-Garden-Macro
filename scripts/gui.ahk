@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-version := "v1.2.9"
+version := "v1.2.9b"
 settingsFile := "settings.ini"
 
 if (A_IsCompiled) {
@@ -39,7 +39,7 @@ Alt & S:: {
 
 Start(*) {
     
-    PlayerStatus("Starting " version " Grow A Garden Macro by epic", "0xFFFF00", , false, , false)
+    PlayerStatus("Starting " version " Grow A Garden Macro by epic fork by achando", "0xFFFF00", , false, , false)
     OnError (e, mode) => (mode = "return") * (-1)
     loop {
         MainLoop() 
@@ -354,7 +354,7 @@ CheckUpdate(req)
             Would you like to open the GitHub release page
             to download the latest version?
 
-            )"
+            )" LatestVer
 
             if MsgBox(message, "Update Available", 0x40004 | 0x40 | 0x4 ) = "Yes" ; 0x4 = Yes/No, 0x40 = info icon, 0x1 = OK/Cancel default button
             {
@@ -378,7 +378,7 @@ handleUpdate(ver){
 
     if choice = "Yes"
     {
-        url := "https://github.com/epicisgood/Grow-a-Garden-Macro/releases/download/v" ver "/Epics_GAG_macro_v" ver ".zip"
+        url := "https://github.com/joaoachando/Grow-a-Garden-Macro/releases/download/v" ver "/Epics_GAG_macro_v" ver ".zip"
         CopySettings := 1
         olddir := A_WorkingDir
         DeleteOld := 1
@@ -388,11 +388,11 @@ handleUpdate(ver){
     }
     else
     {
-        Run "https://github.com/epicisgood/Grow-a-Garden-Macro/releases/latest"
+        Run "https://github.com/joaoachando/Grow-a-Garden-Macro/releases/latest"
     }
 }
 
-AsyncHttpRequest("GET", "https://api.github.com/repos/epicisgood/Grow-a-Garden-Macro/releases/latest", CheckUpdate, Map("accept", "application/vnd.github+json"))
+AsyncHttpRequest("GET", "https://api.github.com/repos/joaoachando/Grow-a-Garden-Macro/releases/latest", CheckUpdate, Map("accept", "application/vnd.github+json"))
 
 
 

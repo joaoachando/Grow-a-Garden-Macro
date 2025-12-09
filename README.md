@@ -17,7 +17,7 @@ A macro for **Grow a Garden** that automatically buys your selected seeds, gear,
 
 1. **Download the Repository**
 
-   * Visit the [Latest Release](https://github.com/epicisgood/Grow-a-Garden-Macro/releases/latest)
+   * Visit the [Latest Release](https://github.com/joaoachando/Grow-a-Garden-Macro/releases/latest)
    * Download and **extract** the ZIP file
 
 2. **Run the Macro**
@@ -51,6 +51,8 @@ Need help extracting ZIPs or setting things up?
 * **Discord user:** [`_epic.`](https://discord.com/users/726162926851063919)
 * **GitHub:** [epicisgood/Grow-a-Garden-Macro](https://github.com/epicisgood/Grow-a-Garden-Macro)
 * **Donate:** [Give me Robux!](https://www.roblox.com/games/18130765440/Grow-a-Garden-Donation-Area#!/store)
+* **Fork Discord user:** [`achando`](https://discord.com/users/179700893640294410)
+* **Fork GitHub:** [joaoachando/Grow-a-Garden-Macro](https://github.com/joaoachando/Grow-a-Garden-Macro)
 
 ---
 

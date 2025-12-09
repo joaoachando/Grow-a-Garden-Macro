@@ -492,7 +492,7 @@ Clickbutton(button, clickit := 1){
         }
 
 
-        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , varation,,7) = 1) {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , variation,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
@@ -504,7 +504,7 @@ Clickbutton(button, clickit := 1){
             Gdip_DisposeImage(pBMScreen)
             return 1
         }
-        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  varation,,7) = 1) {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  variation,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
@@ -543,10 +543,37 @@ Clickbutton(button, clickit := 1){
             return 1
         }
 
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton9"], &OutputList, , , , ,  10,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton10"], &OutputList, , , , ,  10,,7) = 1) {
+            if (clickit == 1){
+                 Cords := StrSplit(OutputList, ",")
+                 x := Cords[1] + capX - 2
+                 y := Cords[2] + capY
+                 MouseMove(x, y)
+                 Sleep(10)
+                 Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
+
 
 
     } else {
-        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , varation,,7) = 1) {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , variation,,7) = 1) {
+            ; Gdip_SaveBitmapToFile(pBMScreen, button ".png")
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
@@ -562,7 +589,7 @@ Clickbutton(button, clickit := 1){
 
 
     if (button == "Seeds" || button == "Sell") {
-        if (Gdip_ImageSearch(pBMScreen, bitmaps[button "2"], &OutputList, , , , , varation,,7) = 1) {
+        if (Gdip_ImageSearch(pBMScreen, bitmaps[button "2"], &OutputList, , , , , variation,,7) = 1) {
             if (clickit == 1){
                 Cords := StrSplit(OutputList, ",")
                 x := Cords[1] + capX - 2
@@ -1713,9 +1740,6 @@ CookingEvent(){
     Send("1")
 }
 
-
-
-
 BuySantasStash(){
     if !(CheckSetting("SantasStash", "SantasStash")){
         return 0
@@ -1724,20 +1748,20 @@ BuySantasStash(){
     PlayerStatus("Going to Santas Stash Shop!", "0x22e6a8",,false,,false)
 
     searchItem("Event Lantern")
-    clickItem("Event Lantern", "Event Lantern")
-    Sleep(1000)
-    Walk(1250,WKey)
-    Sleep(1000)
-    Send("{" Ekey "}")
-    if !DetectShop("SantasStash"){
-        return 0 
+    if(clickItem("Event Lantern", "Event Lantern")) {
+        Sleep(1000)
+        Walk(1250,WKey)
+        Sleep(1000)
+        Send("{" Ekey "}")
+        if !DetectShop("SantasStash"){
+            return 0
+        }
+        buyShop(getItems("SantasStash"), "SantasStash")
+        CloseClutter()
+        Clickbutton("Garden")
+        return 1
     }
-    buyShop(getItems("SantasStash"), "SantasStash")
-    CloseClutter()
-    Clickbutton("Garden")
-    return 1
 }
-
 
 BuyDevillishDecor(){
     if !(CheckSetting("DevillishDecor", "DevillishDecor")){
