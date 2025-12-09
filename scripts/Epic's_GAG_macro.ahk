@@ -496,45 +496,19 @@ Clickbutton(button, clickit := 1){
 
 
             ; Light Xbutton
-            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton"], &OutputList, , , , , varation,,7) = 1) {
+            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton"], &OutputList, , , , , variation,,7) = 1) {
                 ; MsgBox("3")
                 isFound := true
                 Gdip_DisposeImage(pBMScreen)
                 break
             }
             ; Dark Xbutton
-            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  varation,,7) = 1) {
+            if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton2"], &OutputList, , , , ,  variation,,7) = 1) {
                 ; MsgBox("4")
                 isFound := true
                 Gdip_DisposeImage(pBMScreen)
                 break
             }
-
-            ;if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton9"], &OutputList, , , , ,  10,,7) = 1) {
-                         ;            if (clickit == 1){
-                         ;                Cords := StrSplit(OutputList, ",")
-                         ;                x := Cords[1] + capX - 2
-                         ;                y := Cords[2] + capY
-                         ;                MouseMove(x, y)
-                         ;                Sleep(10)
-                         ;                Click
-                         ;            }
-                         ;            Gdip_DisposeImage(pBMScreen)
-                         ;            return 1
-                         ;        }
-                         ;
-                         ;        if (Gdip_ImageSearch(pBMScreen, bitmaps["Xbutton10"], &OutputList, , , , ,  10,,7) = 1) {
-                         ;            if (clickit == 1){
-                         ;                 Cords := StrSplit(OutputList, ",")
-                         ;                 x := Cords[1] + capX - 2
-                         ;                 y := Cords[2] + capY
-                         ;                 MouseMove(x, y)
-                         ;                 Sleep(10)
-                         ;                 Click
-                         ;            }
-                         ;            Gdip_DisposeImage(pBMScreen)
-                         ;            return 1
-                         ;        }
         }
 
         if (clickit == 1 && isFound == true){
