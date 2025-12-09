@@ -10,7 +10,6 @@ cd %temp%
 :: %4 = DeleteOld flag (1 or 0)
 :: %5 = Version number
 
-
 if [%1]==[] (
     echo No URL parameter supplied.
     pause
@@ -49,12 +48,35 @@ if "%copysettings%"=="1" (
 :: Download ZIP to temp
 set "zipfile=%temp%\Epics_GAG_macro_v%ver%.zip"
 echo Downloading %url%...
-powershell -Command "(New-Object Net.WebClient).DownloadFile('%url%', '%zipfile%')"
+
+:: --- IMPROVEMENT: Enforce TLS 1.2 and Check for Download Success ---
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; try { (New-Object Net.WebClient).DownloadFile('%url%', '%zipfile%') } catch { exit 1 }"
+
+if errorlevel 1 (
+    echo.
+    echo [ERROR] Download Failed! The URL returned 404 or the connection failed.
+    echo URL attempted: %url%
+    echo.
+    pause
+    exit /b 1
+)
+
+if not exist "%zipfile%" (
+    echo [ERROR] Download appeared successful but ZIP file is missing.
+    pause
+    exit /b 1
+)
 echo Download complete.
 
 :: Extract ZIP into new folder using WSF script
 echo Extracting to "%newfolder%"...
-for /f delims^=^ EOL^= %%g in ('cscript //nologo "%~f0?.wsf" "%newfolder%" "%zipfile%"') do set "f=%%g"
+cscript //nologo "%~f0?.wsf" "%newfolder%" "%zipfile%"
+
+if errorlevel 1 (
+    echo [ERROR] Extraction failed.
+    pause
+    exit /b 1
+)
 
 echo Extraction complete.
 
@@ -78,9 +100,13 @@ exit /b 0
 
 :: WSF script to extract ZIP
 <job><script language="VBScript">
+On Error Resume Next
 set fso = CreateObject("Scripting.FileSystemObject")
 set objShell = CreateObject("Shell.Application")
 set FilesInZip = objShell.NameSpace(WScript.Arguments(1)).items
+If Err.Number <> 0 Then
+    WScript.Quit 1
+End If
 objShell.NameSpace(WScript.Arguments(0)).CopyHere FilesInZip, 20
 set fso = nothing
 set objShell = nothing
