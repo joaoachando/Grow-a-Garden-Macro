@@ -564,6 +564,19 @@ Clickbutton(button, clickit := 1){
             Gdip_DisposeImage(pBMScreen)
             return 1
         }
+    } else if (button == "SeasonPass"){
+        if (Gdip_ImageSearch(pBMScreen, bitmaps["SeasonPassPressed"], &OutputList, , , , , 10,,7) = 1) {
+            if (clickit == 1){
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
+            Gdip_DisposeImage(pBMScreen)
+            return 1
+        }
     } else if (button == "SeasonStoreGreen") {
         if (Gdip_ImageSearch(pBMScreen, bitmaps["SeasonStoreYellow"], &OutputList, , , , , variation, , 7) = 1) {
             if (clickit == 1) {
