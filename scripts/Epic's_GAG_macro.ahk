@@ -1,4 +1,4 @@
-﻿#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 #Warn VarUnset, Off
 SetWorkingDir A_ScriptDir . "\.."
@@ -843,7 +843,7 @@ buyShop(itemList, itemType, crafting := false){
         if (A_Index >= 23 && itemType != "Seeds") {
             ScrollDown(0.25)
             Sleep(250)
-        } else if ((A_Index >= 14 && itemType == "GearCrafting")){
+        } else if ((A_Index >= 14 && (itemType == "GearCrafting") || itemType == "SantasStash")){
             ScrollDown(0.25 + A_Index * 0.025)
             Sleep(250)
         }
@@ -1505,7 +1505,7 @@ ShowToolTip(){
     }
 
     if (SantasStashEnabled) {
-        static SantasStashTime := 2700
+        static SantasStashTime := 1800
         SantasStashRemaining := Max(0, SantasStashTime - (currentTime - LastSantasStashTime))
         tooltipText .= "SantasStash: " (SantasStashRemaining // 60) ":" Format("{:02}", Mod(SantasStashRemaining, 60)) "`n"
     }
@@ -1711,6 +1711,8 @@ BuySantasStash(){
     if(clickItem("Event Lantern", "Event Lantern")) {
         Sleep(1000)
         Walk(1250,WKey)
+        Sleep(500)
+        Walk(400,Dkey)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("SantasStash"){
