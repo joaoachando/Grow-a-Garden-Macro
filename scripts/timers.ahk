@@ -56,7 +56,7 @@ RewardChecker() {
         LastCreepyCrittersTime := currentTime
         Rewardlist.Push("CreepyCritters")
     }
-    if (currentTime - LastSantasStashTime >= 2700) {
+    if (currentTime - LastSantasStashTime >= 1800) {
         LastSantasStashTime := currentTime
         Rewardlist.Push("SantasStash")
     }

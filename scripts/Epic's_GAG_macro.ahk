@@ -1710,9 +1710,9 @@ BuySantasStash(){
     searchItem("Event Lantern")
     if(clickItem("Event Lantern", "Event Lantern")) {
         Sleep(1000)
-        Walk(1250,WKey)
-        Sleep(500)
-        Walk(400,Dkey)
+        Walk(1400,WKey)
+        Sleep(200)
+        Walk(500,DKey)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("SantasStash"){
