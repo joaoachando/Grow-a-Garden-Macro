@@ -1571,7 +1571,7 @@ ShowToolTip(){
         tooltipText .= "Seed Crafting: " seedM ":" Format("{:02}", seedS) "`n"
     }
     if (ascensionEnabled) {
-        static ascensionTime := 7200
+        static ascensionTime := 14400
         ascensionRemaining := Max(0, ascensionTime - (currentTime - LastAscensionTime))
         tooltipText .= "Ascension: " (ascensionRemaining // 60) ":" Format("{:02}", Mod(ascensionRemaining, 60)) "`n"
     }
