@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.0
+﻿#Requires AutoHotkey v2.0
 #SingleInstance Force
 #Warn VarUnset, Off
 SetWorkingDir A_ScriptDir . "\.."
@@ -803,11 +803,11 @@ buyShop(itemList, itemType, crafting := false){
     if (itemType == "Event" || itemType == "Eggs" || itemType == "Gears"){
         posY := 0.9
     } else if (itemType == "SantasStash"){
-        posY := 0.835
+        posY := 0.86
     } else if (itemType == "SeasonPass") {
         posY := 0.82
     } else {
-        posY := 0.925
+        posY := 0.9
     }
     
 
@@ -843,7 +843,7 @@ buyShop(itemList, itemType, crafting := false){
         if (A_Index >= 23 && itemType != "Seeds") {
             ScrollDown(0.25)
             Sleep(250)
-        } else if (A_Index >= 14 && (itemType == "GearCrafting" || itemType == "SantasStash")){
+        } else if ((A_Index >= 14 && itemType == "GearCrafting")){
             ScrollDown(0.25 + A_Index * 0.025)
             Sleep(250)
         }
