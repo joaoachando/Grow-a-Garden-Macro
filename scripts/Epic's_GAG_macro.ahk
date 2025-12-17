@@ -592,7 +592,14 @@ Clickbutton(button, clickit := 1){
         }
     } else if (button == "Ascension"){
         if (Gdip_ImageSearch(pBMScreen, bitmaps["AscensionNotReady"], &OutputList, , , , , variation,,7) = 1) {
-            PlayerStatus("Ascension not ready.","0xe67e22",,false)
+            if (clickit == 1) {
+                Cords := StrSplit(OutputList, ",")
+                x := Cords[1] + capX - 2
+                y := Cords[2] + capY
+                MouseMove(x, y)
+                Sleep(10)
+                Click
+            }
             Gdip_DisposeImage(pBMScreen)
             return 0
         }
