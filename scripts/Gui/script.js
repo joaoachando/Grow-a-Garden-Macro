@@ -36,7 +36,7 @@ async function onSaveClick() {
 
   const SeedCraftingItems = await getItems("SeedCrafting");
 
-  const SantasStashItems = await getItems("SantasStash");
+  const NewYearsItems = await getItems("NewYears");
   // const fallCosmeticsItems = await getItems("fallCosmetics");
   const DevillishDecorItems = await getItems("DevillishDecor");
   const CreepyCrittersItems = await getItems("CreepyCritters");
@@ -47,7 +47,7 @@ async function onSaveClick() {
   EggItems.push("Eggs");
   GearCraftingItems.push("GearCrafting");
   SeedCraftingItems.push("SeedCrafting");
-  SantasStashItems.push("SantasStash");
+  NewYearsItems.push("NewYears");
   // fallCosmeticsItems.push("fallCosmetics");
   DevillishDecorItems.push("DevillishDecor");
   CreepyCrittersItems.push("CreepyCritters");
@@ -70,7 +70,7 @@ async function onSaveClick() {
     EggItems: {},
     GearCraftingItems: {},
     SeedCraftingItems: {},
-    SantasStashItems: {},
+    NewYearsItems: {},
     // fallCosmeticsItems: {},
     DevillishDecorItems: {},
     CreepyCrittersItems: {},
@@ -84,7 +84,7 @@ async function onSaveClick() {
     EggItems,
     GearCraftingItems,
     SeedCraftingItems,
-    SantasStashItems,
+    NewYearsItems,
     // fallCosmeticsItems,
     DevillishDecorItems,
     CreepyCrittersItems,
@@ -122,16 +122,16 @@ function applySettings(a) {
     document.getElementById('SeasonPass').checked = !!+s.SeasonPass;
 
     const allItems = {
-      SeedItems: s.SeedItems || {},
-      // Seed2Items: s.Seed2Items || {},
-      GearItems: s.GearItems || {},
-      EggItems: s.EggItems || {},
-      GearCraftingItems: s.GearCraftingItems || {},
-      SeedCraftingItems: s.SeedCraftingItems || {},
-      DevillishDecorItems: s.DevillishDecorItems || {},
-      CreepyCrittersItems: s.CreepyCrittersItems || {},
-      SeasonPassItems: s.SeasonPassItems || {},
-      SantasStashItems: s.SantasStashItems || {},
+        SeedItems: s.SeedItems || {},
+        // Seed2Items: s.Seed2Items || {},
+        GearItems: s.GearItems || {},
+        EggItems: s.EggItems || {},
+        GearCraftingItems: s.GearCraftingItems || {},
+        SeedCraftingItems: s.SeedCraftingItems || {},
+        DevillishDecorItems: s.DevillishDecorItems || {},
+        CreepyCrittersItems: s.CreepyCrittersItems || {},
+        SeasonPassItems: s.SeasonPassItems || {},
+        NewYearsItems: s.NewYearsItems || {},
     };
 
     for (const [listName, items] of Object.entries(allItems)) {
@@ -149,7 +149,7 @@ function applySettings(a) {
 
 async function AddHtml() {
   const categories = [
-    'Seeds', 'Gears', 'Eggs', 'GearCrafting', 'SeedCrafting', 'SantasStash', 'CreepyCritters', 'DevillishDecor', 'SeasonPass'
+    'Seeds', 'Gears', 'Eggs', 'GearCrafting', 'SeedCrafting', 'NewYears', 'CreepyCritters', 'DevillishDecor', 'SeasonPass'
     // , "fallCosmetics"
     ];
 
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
       checkboxes.forEach(cb => {
         const isSelectAll = cb.classList.contains("SelectAll");
         const isEnableCheckbox = [
-          'Seeds', 'Gears', 'Eggs', 'SantasStash', 'CreepyCritters', 'DevillishDecor', 'SeasonPass'
+          'Seeds', 'Gears', 'Eggs', 'NewYears', 'CreepyCritters', 'DevillishDecor', 'SeasonPass'
           // , "fallCosmetics"
         ].includes(cb.id);
         if (!isSelectAll && !isEnableCheckbox) {
