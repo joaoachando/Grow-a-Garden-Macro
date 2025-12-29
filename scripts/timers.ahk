@@ -16,7 +16,6 @@ LastSeedCraftingTime := nowUnix()
 LastEventCraftingtime := nowUnix()
 LastCookingTime := nowUnix()
 LastAscensionTime := nowUnix()
-LastSantasStashTime := nowUnix()
 
 LastCosmetics := nowUnix()
 
